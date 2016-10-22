@@ -1,9 +1,9 @@
 package fellowship.actions.mobility;
 
 import fellowship.characters.BaseCharacter;
-import fellowship.actions.CharacterAction;
+import fellowship.actions.Action;
 
-public class Run extends CharacterAction {
+public class Run extends Action {
 
     public Run(BaseCharacter character){
         super(character);

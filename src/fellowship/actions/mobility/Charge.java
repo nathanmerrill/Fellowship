@@ -1,9 +1,9 @@
 package fellowship.actions.mobility;
 
 import fellowship.characters.BaseCharacter;
-import fellowship.actions.CharacterAction;
+import fellowship.actions.Action;
 
-public class Charge extends CharacterAction {
+public class Charge extends Action {
 
     public Charge(BaseCharacter character){
         super(character);

@@ -1,7 +1,7 @@
 package fellowship.actions.other;
 
 import fellowship.characters.BaseCharacter;
-import fellowship.actions.CharacterAction;
+import fellowship.actions.Action;
 import fellowship.actions.TargettedAction;
 import fellowship.events.Event;
 import fellowship.events.Events;
@@ -20,9 +20,9 @@ public class Steal extends TargettedAction {
 
     @Override
     public void perform(BaseCharacter target) {
-        CharacterAction lastAction = target.getLastAction();
+        Action lastAction = target.getLastAction();
         if (lastAction != null) {
-            character.addAction(new CharacterAction(character) {
+            character.addAction(new Action(character) {
                 @Override
                 public void perform() {
                     lastAction.perform();

@@ -1,13 +1,13 @@
 package fellowship.actions.stats;
 
 import fellowship.characters.BaseCharacter;
-import fellowship.actions.CharacterAction;
+import fellowship.actions.Action;
 import fellowship.Stat;
 import fellowship.events.Event;
 import fellowship.events.Events;
 
 
-public class Werewolf extends CharacterAction {
+public class Werewolf extends Action {
 
     public Werewolf(BaseCharacter character) {
         super(character);

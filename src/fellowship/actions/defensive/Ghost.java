@@ -2,13 +2,13 @@ package fellowship.actions.defensive;
 
 import fellowship.events.Event;
 import fellowship.events.Events;
-import fellowship.actions.CharacterAction;
+import fellowship.actions.Action;
 import fellowship.events.DamageEvent;
 
 import fellowship.characters.BaseCharacter;
 
 
-public class Ghost extends CharacterAction {
+public class Ghost extends Action {
 
     public Ghost(BaseCharacter character){
         super(character);

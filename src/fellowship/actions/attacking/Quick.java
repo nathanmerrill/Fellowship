@@ -1,9 +1,9 @@
 package fellowship.actions.attacking;
 
 import fellowship.characters.BaseCharacter;
-import fellowship.actions.CharacterAction;
+import fellowship.actions.Action;
 
-public class Quick extends CharacterAction{
+public class Quick extends Action {
 
     public Quick(BaseCharacter character){
         super(character);

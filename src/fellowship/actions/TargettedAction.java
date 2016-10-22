@@ -3,7 +3,7 @@ package fellowship.actions;
 import fellowship.characters.BaseCharacter;
 import org.eclipse.collections.api.set.MutableSet;
 
-public abstract class TargettedAction extends CharacterAction{
+public abstract class TargettedAction extends Action {
 
     public TargettedAction(BaseCharacter character){
         super(character);

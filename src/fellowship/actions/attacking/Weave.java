@@ -1,9 +1,9 @@
 package fellowship.actions.attacking;
 
 import fellowship.characters.BaseCharacter;
-import fellowship.actions.CharacterAction;
+import fellowship.actions.Action;
 
-public class Weave extends CharacterAction{
+public class Weave extends Action {
 
     public Weave(BaseCharacter character){
         super(character);

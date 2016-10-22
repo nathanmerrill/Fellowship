@@ -4,7 +4,7 @@ import com.ppcg.kothcomm.game.maps.gridmaps.Point2D;
 import fellowship.characters.BaseCharacter;
 import fellowship.Range;
 
-public abstract class LocationAction extends CharacterAction{
+public abstract class LocationAction extends Action {
 
     private final Range range;
 

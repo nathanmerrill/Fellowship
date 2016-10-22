@@ -1,9 +1,9 @@
 package fellowship.actions.vision;
 
 import fellowship.characters.BaseCharacter;
-import fellowship.actions.CharacterAction;
+import fellowship.actions.Action;
 
-public class Hide extends CharacterAction{
+public class Hide extends Action {
 
     public Hide(BaseCharacter character){
         super(character);

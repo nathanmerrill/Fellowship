@@ -1,11 +1,11 @@
 package fellowship.actions.defensive;
 
 import fellowship.characters.BaseCharacter;
-import fellowship.actions.CharacterAction;
+import fellowship.actions.Action;
 import fellowship.events.Event;
 import fellowship.events.Events;
 
-public class ForceField extends CharacterAction {
+public class ForceField extends Action {
 
     public ForceField(BaseCharacter character){
         super(character);

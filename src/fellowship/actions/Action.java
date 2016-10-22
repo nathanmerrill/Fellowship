@@ -3,10 +3,10 @@ package fellowship.actions;
 import fellowship.characters.BaseCharacter;
 import fellowship.events.Events;
 
-public abstract class CharacterAction implements ActionInterface {
+public abstract class Action implements ActionInterface {
     protected final BaseCharacter character;
     public int cooldown;
-    public CharacterAction(BaseCharacter character){
+    public Action(BaseCharacter character){
         this.character = character;
         cooldown = 0;
     }
@@ -39,7 +39,7 @@ public abstract class CharacterAction implements ActionInterface {
     public boolean movementAction(){
         return false;
     }
-    public final Class<? extends CharacterAction> actionClass(){
+    public final Class<? extends Action> actionClass(){
         return this.getClass();
     }
 }

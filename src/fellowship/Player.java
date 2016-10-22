@@ -2,8 +2,7 @@ package fellowship;
 
 import com.ppcg.kothcomm.game.AbstractPlayer;
 import com.ppcg.kothcomm.game.maps.gridmaps.Point2D;
-import fellowship.actions.CharacterAction;
-import fellowship.actions.ReadonlyCharacterAction;
+import fellowship.actions.ReadonlyAction;
 import fellowship.characters.ReadonlyCharacter;
 import fellowship.teams.ReadonlyTeam;
 
@@ -12,7 +11,7 @@ import java.util.Set;
 public abstract class Player extends AbstractPlayer<Player>{
 
     private ReadonlyCharacter currentCharacter;
-    private ReadonlyCharacterAction currentAction;
+    private ReadonlyAction currentAction;
     private ReadonlyTeam team;
 
     public final ReadonlyCharacter getCurrentCharacter(){
@@ -22,10 +21,10 @@ public abstract class Player extends AbstractPlayer<Player>{
         this.currentCharacter = currentCharacter;
     }
 
-    public final ReadonlyCharacterAction getCurrentAction() {
+    public final ReadonlyAction getCurrentAction() {
         return currentAction;
     }
-    public final void setCurrentAction(ReadonlyCharacterAction currentAction) {
+    public final void setCurrentAction(ReadonlyAction currentAction) {
         this.currentAction = currentAction;
     }
 
@@ -36,7 +35,7 @@ public abstract class Player extends AbstractPlayer<Player>{
         this.team = team;
     }
 
-    public abstract CharacterAction choose(Set<ReadonlyCharacterAction> actions);
+    public abstract ReadonlyAction choose(Set<ReadonlyAction> actions);
     public abstract Point2D locate(Set<Point2D> options);
     public abstract ReadonlyCharacter target(Set<ReadonlyCharacter> options);
 }

@@ -1,9 +1,9 @@
 package fellowship.actions.vision;
 
 import fellowship.characters.BaseCharacter;
-import fellowship.actions.CharacterAction;
+import fellowship.actions.Action;
 
-public class Cloak extends CharacterAction{
+public class Cloak extends Action {
 
     public Cloak(BaseCharacter character){
         super(character);

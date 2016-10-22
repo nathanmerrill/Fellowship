@@ -3,7 +3,7 @@ package fellowship.characters;
 import com.ppcg.kothcomm.game.maps.gridmaps.Point2D;
 import fellowship.*;
 import fellowship.abilities.ReadonlyCharacterAbility;
-import fellowship.actions.ReadonlyCharacterAction;
+import fellowship.actions.ReadonlyAction;
 import fellowship.teams.EnemyTeam;
 import org.eclipse.collections.api.list.MutableList;
 
@@ -30,8 +30,8 @@ public class EnemyCharacter implements CharacterInterface {
         return character.getSightRange();
     }
 
-    public ReadonlyCharacterAction getLastAction(){
-        return new ReadonlyCharacterAction(character.getLastAction());
+    public ReadonlyAction getLastAction(){
+        return new ReadonlyAction(character.getLastAction());
     }
 
     public boolean isFrozen(){

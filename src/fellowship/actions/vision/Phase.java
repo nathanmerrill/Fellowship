@@ -1,9 +1,9 @@
 package fellowship.actions.vision;
 
 import fellowship.characters.BaseCharacter;
-import fellowship.actions.CharacterAction;
+import fellowship.actions.Action;
 
-public class Phase extends CharacterAction{
+public class Phase extends Action {
 
     public Phase(BaseCharacter character){
         super(character);

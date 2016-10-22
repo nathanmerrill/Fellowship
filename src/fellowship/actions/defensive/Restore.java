@@ -1,9 +1,9 @@
 package fellowship.actions.defensive;
 
 import fellowship.characters.BaseCharacter;
-import fellowship.actions.CharacterAction;
+import fellowship.actions.Action;
 
-public class Restore extends CharacterAction {
+public class Restore extends Action {
 
     public Restore(BaseCharacter character){
         super(character);

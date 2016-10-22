@@ -4,7 +4,7 @@ import com.ppcg.kothcomm.game.maps.gridmaps.Point2D;
 import fellowship.Range;
 import fellowship.Stat;
 import fellowship.abilities.ReadonlyCharacterAbility;
-import fellowship.actions.ReadonlyCharacterAction;
+import fellowship.actions.ReadonlyAction;
 import fellowship.teams.ReadonlyTeam;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.set.MutableSet;
@@ -35,8 +35,8 @@ public class ReadonlyCharacter implements CharacterInterface {
         return character.getSightRange();
     }
 
-    public ReadonlyCharacterAction getLastAction(){
-        return new ReadonlyCharacterAction(character.getLastAction());
+    public ReadonlyAction getLastAction(){
+        return new ReadonlyAction(character.getLastAction());
     }
 
     public boolean isFrozen(){

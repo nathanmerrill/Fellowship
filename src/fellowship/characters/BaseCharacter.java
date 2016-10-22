@@ -4,8 +4,8 @@ import com.ppcg.kothcomm.game.maps.gridmaps.GridMap;
 import com.ppcg.kothcomm.game.maps.gridmaps.Point2D;
 import fellowship.*;
 import fellowship.abilities.CharacterAbility;
-import fellowship.actions.CharacterAction;
-import fellowship.actions.ReadonlyCharacterAction;
+import fellowship.actions.Action;
+import fellowship.actions.ReadonlyAction;
 import fellowship.actions.attacking.Slice;
 import fellowship.actions.mobility.Step;
 import fellowship.actions.other.Smile;
@@ -13,6 +13,7 @@ import fellowship.teams.Team;
 import fellowship.events.*;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.list.primitive.MutableIntList;
+import org.eclipse.collections.api.map.MutableMap;
 import org.eclipse.collections.api.set.MutableSet;
 import org.eclipse.collections.impl.factory.Lists;
 import org.eclipse.collections.impl.factory.Sets;
@@ -32,8 +33,8 @@ public class BaseCharacter implements MapObject, CharacterInterface {
     private final GridMap<Point2D, MapObject> map;
     private final ActionQueue actionQueue;
     private final MutableList<CharacterAbility> abilities;
-    private final MutableList<CharacterAction> actions;
-    private final CharacterAction slice, step, smile;
+    private final MutableList<Action> actions;
+    private final Action slice, step, smile;
     private final MutableIntList stats;
     private Stat primary;
     private int attributePoints;
@@ -49,7 +50,7 @@ public class BaseCharacter implements MapObject, CharacterInterface {
     private int turn;
     private boolean dead;
     private Range sightRange, sliceRange, stepRange;
-    private CharacterAction lastAction;
+    private Action lastAction;
     private EventManager eventManager;
     private Point2D currentLocation;
 
@@ -118,11 +119,11 @@ public class BaseCharacter implements MapObject, CharacterInterface {
         return stats.get(stat.ordinal());
     }
 
-    public void addAction(CharacterAction action){
+    public void addAction(Action action){
         actions.add(action);
     }
 
-    public void removeAction(CharacterAction action){
+    public void removeAction(Action action){
         actions.remove(action);
     }
 
@@ -179,7 +180,7 @@ public class BaseCharacter implements MapObject, CharacterInterface {
         abilities.add(ability);
     }
 
-    public CharacterAction getLastAction(){
+    public Action getLastAction(){
         return lastAction;
     }
 
@@ -215,27 +216,27 @@ public class BaseCharacter implements MapObject, CharacterInterface {
         if (isPoisoned()){
             damage(getPoisonAmount());
         }
-        MutableList<CharacterAction> actions = this.actions.select(CharacterAction::isAvailable);
+        MutableList<Action> actions = this.actions.select(Action::isAvailable);
 
         if (isStunned()){
             actions = actions.selectWith(Object::equals, smile);
         }
         if (isSilenced()){
-            actions = actions.select(CharacterAction::basicAction);
+            actions = actions.select(Action::basicAction);
         }
         if (isFrozen()){
-            actions = actions.reject(CharacterAction::movementAction);
+            actions = actions.reject(Action::movementAction);
         }
-        MutableSet<ReadonlyCharacterAction> availableActions = actions.collect(ReadonlyCharacterAction::new).toSet();
+        MutableMap<ReadonlyAction, Action> availableActions = actions.toMap(ReadonlyAction::new, i -> i);
 
-        CharacterAction choice = player.choose(availableActions);
+        ReadonlyAction choice = player.choose(availableActions.keysView().toSet());
         if (availableActions.contains(choice)){
             if (choice.breaksInvisibility()){
                 invisibleTurn = -1;
             }
-            choice.perform();
+            availableActions.get(choice).perform();
             if (!choice.basicAction()){
-                lastAction = choice;
+                lastAction = availableActions.get(choice);
             }
         }
         return delay;
@@ -329,9 +330,9 @@ public class BaseCharacter implements MapObject, CharacterInterface {
         return points;
     }
 
-    public BaseCharacter getTargetFor(CharacterAction action, MutableSet<BaseCharacter> options){
+    public BaseCharacter getTargetFor(Action action, MutableSet<BaseCharacter> options){
         Player player = team.getPlayer();
-        player.setCurrentAction(new ReadonlyCharacterAction(action));
+        player.setCurrentAction(new ReadonlyAction(action));
         player.setCurrentCharacter(new ReadonlyCharacter(this));
         ReadonlyCharacter readonly = team.getPlayer().target(options.collect(ReadonlyCharacter::new));
         if (readonly == null){
@@ -344,9 +345,9 @@ public class BaseCharacter implements MapObject, CharacterInterface {
         return null;
     }
 
-    public Point2D getLocationFor(CharacterAction action, Range range){
+    public Point2D getLocationFor(Action action, Range range){
         Player player = team.getPlayer();
-        player.setCurrentAction(new ReadonlyCharacterAction(action));
+        player.setCurrentAction(new ReadonlyAction(action));
         player.setCurrentCharacter(new ReadonlyCharacter(this));
         return player.locate(rangeAround(range).reject(this.getMap()::isFilled));
     }

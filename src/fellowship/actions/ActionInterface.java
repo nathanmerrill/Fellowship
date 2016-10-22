@@ -7,5 +7,5 @@ public interface ActionInterface {
     boolean basicAction();
     boolean breaksInvisibility();
     boolean movementAction();
-    Class<? extends CharacterAction> actionClass();
+    Class<? extends Action> actionClass();
 }

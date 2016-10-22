@@ -1,10 +1,10 @@
 package fellowship.actions;
 
 
-public class ReadonlyCharacterAction implements ActionInterface {
+public class ReadonlyAction implements ActionInterface {
 
-    private final CharacterAction action;
-    public ReadonlyCharacterAction(CharacterAction action){
+    private final Action action;
+    public ReadonlyAction(Action action){
         this.action = action;
     }
 
@@ -26,7 +26,7 @@ public class ReadonlyCharacterAction implements ActionInterface {
     public boolean movementAction(){
         return action.movementAction();
     }
-    public final Class<? extends CharacterAction> actionClass(){
+    public final Class<? extends Action> actionClass(){
         return action.getClass();
     }
 }

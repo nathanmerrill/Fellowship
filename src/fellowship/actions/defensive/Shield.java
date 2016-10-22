@@ -1,11 +1,11 @@
 package fellowship.actions.defensive;
 
 import fellowship.characters.BaseCharacter;
-import fellowship.actions.CharacterAction;
+import fellowship.actions.Action;
 import fellowship.events.Event;
 import fellowship.events.Events;
 
-public class Shield extends CharacterAction {
+public class Shield extends Action {
     public Shield(BaseCharacter character){
         super(character);
     }

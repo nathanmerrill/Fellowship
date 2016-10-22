@@ -1,9 +1,9 @@
 package fellowship.actions.other;
 
 import fellowship.characters.BaseCharacter;
-import fellowship.actions.CharacterAction;
+import fellowship.actions.Action;
 
-public class Smile extends CharacterAction {
+public class Smile extends Action {
 
     public Smile(BaseCharacter character){
         super(character);
