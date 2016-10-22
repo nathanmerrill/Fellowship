@@ -1,0 +1,3 @@
+[submodule "KoTHComm"]
+	path = KoTHComm
+	url = git@github.com:nathanmerrill/KoTHComm.git
