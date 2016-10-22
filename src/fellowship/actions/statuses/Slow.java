@@ -1,26 +1,24 @@
 package fellowship.actions.statuses;
 
-import fellowship.Character;
-import fellowship.actions.CharacterAction;
+import fellowship.characters.BaseCharacter;
 import fellowship.actions.TargettedAction;
 import fellowship.events.Event;
 import fellowship.events.Events;
-
-import java.util.List;
+import org.eclipse.collections.api.set.MutableSet;
 
 public class Slow extends TargettedAction {
 
-    public Slow(Character character){
+    public Slow(BaseCharacter character){
         super(character);
     }
 
     @Override
-    protected List<Character> getAvailableTargets() {
+    protected MutableSet<BaseCharacter> getAvailableTargets() {
         return character.enemyCharacters();
     }
 
     @Override
-    public void perform(Character target) {
+    public void perform(BaseCharacter target) {
         target.slow(40);
         target.on(Events.TurnStart, Event.after(3, e -> target.slow(-40)));
     }

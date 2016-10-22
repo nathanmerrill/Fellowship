@@ -1,31 +1,30 @@
 package fellowship.abilities;
 
-import fellowship.Character;
-import fellowship.CharacterAbility;
 import fellowship.actions.CharacterAction;
+import fellowship.characters.BaseCharacter;
+import org.eclipse.collections.api.block.function.Function;
 
-import java.util.function.Function;
 
 public class ActionAbility implements CharacterAbility {
-    private final Function<Character, CharacterAction> action;
+    private final Function<BaseCharacter, CharacterAction> action;
     private final boolean repeatable;
     private final int numSlots;
-    public ActionAbility(Function<Character, CharacterAction> action, boolean repeatable, int numSlots){
+    public ActionAbility(Function<BaseCharacter, CharacterAction> action, boolean repeatable, int numSlots){
         this.action = action;
         this.repeatable = repeatable;
         this.numSlots = numSlots;
     }
-    public ActionAbility(Function<Character, CharacterAction> action, boolean repeatable){
+    public ActionAbility(Function<BaseCharacter, CharacterAction> action, boolean repeatable){
         this(action, repeatable, 1);
     }
-    public ActionAbility(Function<Character, CharacterAction> action, int numSlots){
+    public ActionAbility(Function<BaseCharacter, CharacterAction> action, int numSlots){
         this(action, false, numSlots);
     }
-    public ActionAbility(Function<Character, CharacterAction> action){
+    public ActionAbility(Function<BaseCharacter, CharacterAction> action){
         this(action, false, 1);
     }
     @Override
-    public void apply(Character character) {
+    public void apply(BaseCharacter character) {
         character.addAction(action.apply(character));
     }
 

@@ -1,27 +1,25 @@
 package fellowship.actions.vision;
 
-import fellowship.Character;
-import fellowship.actions.CharacterAction;
+import fellowship.characters.BaseCharacter;
 import fellowship.actions.TargettedAction;
 import fellowship.events.DamageEvent;
 import fellowship.events.Event;
 import fellowship.events.Events;
-
-import java.util.List;
+import org.eclipse.collections.api.set.MutableSet;
 
 public class Track extends TargettedAction {
 
-    public Track(Character character){
+    public Track(BaseCharacter character){
         super(character);
     }
 
     @Override
-    protected List<Character> getAvailableTargets() {
+    protected MutableSet<BaseCharacter> getAvailableTargets() {
         return character.enemyCharacters();
     }
 
     @Override
-    public void perform(Character target) {
+    public void perform(BaseCharacter target) {
         int revealEvent = target.on(Events.TurnEnd, Event.forever(t -> target.reveal()));
         int damageEvent = target.on(Events.Damaged, Event.forever(t -> {
             DamageEvent damage = (DamageEvent) t;

@@ -1,24 +1,22 @@
 package fellowship.actions.statuses;
 
-import fellowship.Character;
-import fellowship.actions.CharacterAction;
+import fellowship.characters.BaseCharacter;
 import fellowship.actions.TargettedAction;
-
-import java.util.List;
+import org.eclipse.collections.api.set.MutableSet;
 
 public class Knockout extends TargettedAction {
 
-    public Knockout(Character character){
+    public Knockout(BaseCharacter character){
         super(character);
     }
 
     @Override
-    protected List<Character> getAvailableTargets() {
+    protected MutableSet<BaseCharacter> getAvailableTargets() {
         return character.enemyCharacters();
     }
 
     @Override
-    public void perform(Character target) {
+    public void perform(BaseCharacter target) {
         target.stun(1000);
         character.stun(1000);
     }

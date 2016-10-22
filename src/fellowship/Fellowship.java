@@ -1,26 +1,20 @@
 package fellowship;
 
-import game.Game;
-import game.Scoreboard;
 
-import java.util.stream.StreamSupport;
+import com.ppcg.kothcomm.game.AbstractGame;
+import com.ppcg.kothcomm.game.scoring.Scoreboard;
 
-public class Fellowship extends Game<Team> {
+
+public class Fellowship extends AbstractGame<Player> {
 
     @Override
     public void setup() {
 
-        for (Team team: players){
-            for (Character character: team){
-
-            }
-        }
     }
 
     @Override
-    public Scoreboard<Team> getScores() {
-        Scoreboard<Team> s = new Scoreboard<>();
-        return s;
+    public Scoreboard<Player> getScores() {
+       return null;
     }
 
     @Override

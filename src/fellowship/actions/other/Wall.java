@@ -1,14 +1,13 @@
 package fellowship.actions.other;
 
 import com.ppcg.kothcomm.game.maps.gridmaps.Point2D;
-import fellowship.Character;
-import fellowship.actions.CharacterAction;
+import fellowship.characters.BaseCharacter;
 import fellowship.WallObject;
 import fellowship.actions.LocationAction;
 
 public class Wall extends LocationAction {
 
-    public Wall(Character character){
+    public Wall(BaseCharacter character){
         super(character, 6);
     }
 

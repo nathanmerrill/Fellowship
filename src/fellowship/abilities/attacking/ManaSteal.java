@@ -1,8 +1,7 @@
 package fellowship.abilities.attacking;
 
-import fellowship.Character;
-import fellowship.CharacterAbility;
-import fellowship.Stat;
+import fellowship.characters.BaseCharacter;
+import fellowship.abilities.CharacterAbility;
 import fellowship.events.Event;
 import fellowship.events.Events;
 import fellowship.events.SliceEvent;
@@ -10,11 +9,11 @@ import fellowship.events.SliceEvent;
 public class ManaSteal implements CharacterAbility{
 
     @Override
-    public void apply(Character character) {
+    public void apply(BaseCharacter character) {
         character.on(Events.Slice, Event.forever(i -> {
             SliceEvent event = (SliceEvent)i;
-            Character target = event.getSliced();
-            character.removeMana(-2);
+            BaseCharacter target = event.getSliced();
+            character.addMana(2);
             target.removeMana(2);
         }));
     }

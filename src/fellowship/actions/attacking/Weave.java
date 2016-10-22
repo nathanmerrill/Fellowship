@@ -1,11 +1,11 @@
 package fellowship.actions.attacking;
 
-import fellowship.Character;
+import fellowship.characters.BaseCharacter;
 import fellowship.actions.CharacterAction;
 
 public class Weave extends CharacterAction{
 
-    public Weave(Character character){
+    public Weave(BaseCharacter character){
         super(character);
     }
 

@@ -1,13 +1,12 @@
 package fellowship.actions.mobility;
 
 import com.ppcg.kothcomm.game.maps.gridmaps.Point2D;
-import fellowship.Character;
-import fellowship.actions.CharacterAction;
+import fellowship.characters.BaseCharacter;
 import fellowship.actions.LocationAction;
 
 public class Blink extends LocationAction {
 
-    public Blink(Character character){
+    public Blink(BaseCharacter character){
         super(character, 4);
     }
     @Override

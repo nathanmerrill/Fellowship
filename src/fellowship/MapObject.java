@@ -1,4 +1,4 @@
 package fellowship;
 
-public class MapObject {
+public interface MapObject {
 }

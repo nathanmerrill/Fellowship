@@ -1,11 +1,11 @@
 package fellowship.actions.defensive;
 
-import fellowship.Character;
+import fellowship.characters.BaseCharacter;
 import fellowship.actions.CharacterAction;
 
 public class Restore extends CharacterAction {
 
-    public Restore(Character character){
+    public Restore(BaseCharacter character){
         super(character);
     }
     @Override

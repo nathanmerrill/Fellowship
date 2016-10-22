@@ -1,6 +1,6 @@
 package fellowship.actions.stats;
 
-import fellowship.Character;
+import fellowship.characters.BaseCharacter;
 import fellowship.actions.CharacterAction;
 import fellowship.Stat;
 import fellowship.events.Event;
@@ -9,18 +9,18 @@ import fellowship.events.Events;
 
 public class Werewolf extends CharacterAction {
 
-    public Werewolf(Character character) {
+    public Werewolf(BaseCharacter character) {
         super(character);
     }
 
     @Override
     public void perform() {
-        for (Stat.StatType type : Stat.StatType.values()) {
-            character.addStat(new Stat(type, 10));
+        for (Stat type : Stat.values()) {
+            character.addStat(type, 10);
         }
         character.on(Events.TurnStart, Event.after(10, t -> {
-                    for (Stat.StatType type : Stat.StatType.values()) {
-                        character.addStat(new Stat(type, -10));
+                    for (Stat type : Stat.values()) {
+                        character.addStat(type, -10);
                     }
                 }
         ));

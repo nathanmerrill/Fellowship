@@ -1,11 +1,11 @@
 package fellowship.actions.vision;
 
-import fellowship.Character;
+import fellowship.characters.BaseCharacter;
 import fellowship.actions.CharacterAction;
 
 public class Phase extends CharacterAction{
 
-    public Phase(Character character){
+    public Phase(BaseCharacter character){
         super(character);
     }
 

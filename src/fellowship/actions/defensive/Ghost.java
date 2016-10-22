@@ -5,21 +5,22 @@ import fellowship.events.Events;
 import fellowship.actions.CharacterAction;
 import fellowship.events.DamageEvent;
 
-import fellowship.Character;
+import fellowship.characters.BaseCharacter;
 
 
 public class Ghost extends CharacterAction {
 
-    public Ghost(Character character){
+    public Ghost(BaseCharacter character){
         super(character);
     }
 
     @Override
     public void perform() {
 
-        int id = character.on(Events.Damage, Event.forever(sliceEvent -> {
-            sliceEvent.cancel();
-            character.heal(((DamageEvent)sliceEvent).getAmount());
+        int id = character.on(Events.Damaged, Event.forever((Event event) -> {
+            DamageEvent damaged = (DamageEvent) event;
+            damaged.cancel();
+            character.heal(damaged.getAmount());
         }));
         character.on(Events.TurnStart, Event.once(i -> character.off(id)));
     }

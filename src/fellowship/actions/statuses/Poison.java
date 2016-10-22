@@ -1,24 +1,22 @@
 package fellowship.actions.statuses;
 
-import fellowship.Character;
-import fellowship.actions.CharacterAction;
+import fellowship.characters.BaseCharacter;
 import fellowship.actions.TargettedAction;
-
-import java.util.List;
+import org.eclipse.collections.api.set.MutableSet;
 
 public class Poison extends TargettedAction {
 
-    public Poison(Character character){
+    public Poison(BaseCharacter character){
         super(character);
     }
 
     @Override
-    protected List<Character> getAvailableTargets() {
+    protected MutableSet<BaseCharacter> getAvailableTargets() {
         return character.enemyCharacters();
     }
 
     @Override
-    public void perform(Character target) {
+    public void perform(BaseCharacter target) {
         target.poison(1, 5);
     }
 

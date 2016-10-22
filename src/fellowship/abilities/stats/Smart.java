@@ -1,12 +1,12 @@
 package fellowship.abilities.stats;
 
-import fellowship.Character;
-import fellowship.CharacterAbility;
+import fellowship.characters.BaseCharacter;
+import fellowship.abilities.CharacterAbility;
 
 public class Smart implements CharacterAbility {
 
     @Override
-    public void apply(Character character) {
+    public void apply(BaseCharacter character) {
         character.setSmartness(character.smartness()+1);
     }
 

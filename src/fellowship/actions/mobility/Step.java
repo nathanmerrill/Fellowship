@@ -1,16 +1,23 @@
 package fellowship.actions.mobility;
 
-import fellowship.Character;
-import fellowship.actions.CharacterAction;
+import com.ppcg.kothcomm.game.maps.gridmaps.Point2D;
+import fellowship.characters.BaseCharacter;
+import fellowship.Range;
+import fellowship.actions.LocationAction;
 
-public class Step extends CharacterAction {
+public class Step extends LocationAction {
 
-    public Step(Character character){
+    public Step(BaseCharacter character){
         super(character);
     }
 
     @Override
-    public void perform() {
+    public Range getRange() {
+        return character.getStepRange();
+    }
+
+    @Override
+    public void perform(Point2D point) {
         character.step();
     }
 
@@ -32,5 +39,10 @@ public class Step extends CharacterAction {
     @Override
     public boolean movementAction() {
         return true;
+    }
+
+    @Override
+    public boolean isAvailable() {
+        return character.isFrozen();
     }
 }

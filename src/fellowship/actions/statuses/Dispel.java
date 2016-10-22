@@ -1,27 +1,22 @@
 package fellowship.actions.statuses;
 
-import fellowship.Character;
-import fellowship.actions.CharacterAction;
+import fellowship.characters.BaseCharacter;
 import fellowship.actions.TargettedAction;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.eclipse.collections.api.set.MutableSet;
 
 public class Dispel extends TargettedAction{
 
-    public Dispel(Character character){
+    public Dispel(BaseCharacter character){
         super(character);
     }
 
     @Override
-    protected List<Character> getAvailableTargets() {
-        ArrayList<Character> targets = new ArrayList<>(character.enemyCharacters());
-        targets.addAll(character.teamCharacters());
-        return targets;
+    protected MutableSet<BaseCharacter> getAvailableTargets() {
+        return character.enemyCharacters().withAll(character.teamCharacters());
     }
 
     @Override
-    public void perform(Character target) {
+    public void perform(BaseCharacter target) {
         target.dispel();
     }
 

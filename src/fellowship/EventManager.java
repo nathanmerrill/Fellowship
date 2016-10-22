@@ -1,8 +1,9 @@
 package fellowship;
 
-import com.ppcg.kothcomm.utils.Pair;
 import fellowship.events.Event;
 import fellowship.events.Events;
+import org.eclipse.collections.api.tuple.Pair;
+import org.eclipse.collections.impl.tuple.Tuples;
 
 import java.util.*;
 import java.util.function.Function;
@@ -26,7 +27,7 @@ public class EventManager {
     public int addListener(Events type, Function<Event, Boolean> listener){
         listeners.get(type).add(listener);
         eventNums.put(counter, listener);
-        reverseMapping.put(listener, new Pair<>(0, type));
+        reverseMapping.put(listener, Tuples.pair(0, type));
         return counter++;
     }
 
@@ -37,8 +38,8 @@ public class EventManager {
     public void removeListener(Function<Event, Boolean> listener){
         Pair<Integer, Events> keys = reverseMapping.get(listener);
         if (keys != null){
-            eventNums.remove(keys.first());
-            listeners.get(keys.second()).remove(listener);
+            eventNums.remove(keys.getOne());
+            listeners.get(keys.getTwo()).remove(listener);
         }
     }
 

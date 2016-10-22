@@ -1,13 +1,12 @@
 package fellowship.events;
 
-import fellowship.Character;
-import fellowship.events.Event;
+import fellowship.characters.BaseCharacter;
 
 public class SliceEvent extends Event {
 
     private double amount;
-    private final Character slicer, sliced;
-    public SliceEvent(Character slicer, Character sliced, double amount){
+    private final BaseCharacter slicer, sliced;
+    public SliceEvent(BaseCharacter slicer, BaseCharacter sliced, double amount){
         this.slicer = slicer;
         this.sliced = sliced;
         this.amount = amount;
@@ -21,11 +20,11 @@ public class SliceEvent extends Event {
         return amount;
     }
 
-    public Character getSlicer(){
+    public BaseCharacter getSlicer(){
         return slicer;
     }
 
-    public Character getSliced(){
+    public BaseCharacter getSliced(){
         return sliced;
     }
 }

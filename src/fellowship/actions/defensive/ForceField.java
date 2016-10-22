@@ -1,13 +1,13 @@
 package fellowship.actions.defensive;
 
-import fellowship.Character;
+import fellowship.characters.BaseCharacter;
 import fellowship.actions.CharacterAction;
 import fellowship.events.Event;
 import fellowship.events.Events;
 
 public class ForceField extends CharacterAction {
 
-    public ForceField(Character character){
+    public ForceField(BaseCharacter character){
         super(character);
     }
 

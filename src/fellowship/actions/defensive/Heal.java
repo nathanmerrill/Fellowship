@@ -1,24 +1,22 @@
 package fellowship.actions.defensive;
 
-import fellowship.Character;
-import fellowship.actions.CharacterAction;
+import fellowship.characters.BaseCharacter;
 import fellowship.actions.TargettedAction;
-
-import java.util.List;
+import org.eclipse.collections.api.set.MutableSet;
 
 public class Heal extends TargettedAction {
 
-    public Heal(Character character){
+    public Heal(BaseCharacter character){
         super(character);
     }
 
     @Override
-    protected List<Character> getAvailableTargets() {
+    protected MutableSet<BaseCharacter> getAvailableTargets() {
         return character.teamCharacters();
     }
 
     @Override
-    public void perform(Character target) {
+    public void perform(BaseCharacter target) {
         target.heal(20);
     }
 

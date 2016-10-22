@@ -1,26 +1,25 @@
 package fellowship.actions.other;
 
-import fellowship.Character;
+import fellowship.characters.BaseCharacter;
 import fellowship.actions.CharacterAction;
 import fellowship.actions.TargettedAction;
 import fellowship.events.Event;
 import fellowship.events.Events;
-
-import java.util.List;
+import org.eclipse.collections.api.set.MutableSet;
 
 public class Steal extends TargettedAction {
 
-    public Steal(Character character){
+    public Steal(BaseCharacter character){
         super(character);
     }
 
     @Override
-    protected List<Character> getAvailableTargets() {
+    protected MutableSet<BaseCharacter> getAvailableTargets() {
         return character.enemyCharacters(4);
     }
 
     @Override
-    public void perform(Character target) {
+    public void perform(BaseCharacter target) {
         CharacterAction lastAction = target.getLastAction();
         if (lastAction != null) {
             character.addAction(new CharacterAction(character) {

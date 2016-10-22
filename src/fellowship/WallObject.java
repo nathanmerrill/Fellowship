@@ -1,5 +1,5 @@
 package fellowship;
 
-public class WallObject extends MapObject {
+public class WallObject implements MapObject {
 
 }

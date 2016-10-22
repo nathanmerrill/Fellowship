@@ -1,14 +1,14 @@
 package fellowship.actions.damage;
 
 import com.ppcg.kothcomm.game.maps.gridmaps.Point2D;
-import fellowship.Character;
+import fellowship.characters.BaseCharacter;
 import fellowship.events.Events;
 import fellowship.actions.LocationAction;
 import fellowship.events.StepEvent;
 
 public class Trap extends LocationAction {
 
-    public Trap(Character character){
+    public Trap(BaseCharacter character){
         super(character, 4);
     }
 

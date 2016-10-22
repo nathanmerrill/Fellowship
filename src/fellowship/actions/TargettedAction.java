@@ -1,19 +1,18 @@
 package fellowship.actions;
 
-import fellowship.Character;
-
-import java.util.List;
+import fellowship.characters.BaseCharacter;
+import org.eclipse.collections.api.set.MutableSet;
 
 public abstract class TargettedAction extends CharacterAction{
 
-    public TargettedAction(Character character){
+    public TargettedAction(BaseCharacter character){
         super(character);
     }
 
     @Override
     public final void perform() {
-        List<Character> availableTargets = getAvailableTargets();
-        Character target = character.getTargetFor(this, availableTargets);
+        MutableSet<BaseCharacter> availableTargets = getAvailableTargets();
+        BaseCharacter target = character.getTargetFor(this, availableTargets);
         if (target != null){
             perform(character);
         }
@@ -25,7 +24,7 @@ public abstract class TargettedAction extends CharacterAction{
                 && !getAvailableTargets().isEmpty();
     }
 
-    protected abstract List<Character> getAvailableTargets();
+    protected abstract MutableSet<BaseCharacter> getAvailableTargets();
 
-    protected abstract void perform(Character target);
+    protected abstract void perform(BaseCharacter target);
 }

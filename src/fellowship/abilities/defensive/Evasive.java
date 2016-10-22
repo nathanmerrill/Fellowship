@@ -1,7 +1,7 @@
 package fellowship.abilities.defensive;
 
-import fellowship.Character;
-import fellowship.CharacterAbility;
+import fellowship.characters.BaseCharacter;
+import fellowship.abilities.CharacterAbility;
 import fellowship.events.Event;
 import fellowship.events.Events;
 
@@ -14,7 +14,7 @@ public class Evasive implements CharacterAbility {
         this.random = random;
     }
     @Override
-    public void apply(Character character) {
+    public void apply(BaseCharacter character) {
         character.on(Events.Sliced, Event.forever(i -> {
             if (random.nextDouble() < .25){
                 i.cancel();

@@ -1,24 +1,22 @@
 package fellowship.actions.attacking;
 
-import fellowship.Character;
-import fellowship.actions.CharacterAction;
+import fellowship.characters.BaseCharacter;
 import fellowship.actions.TargettedAction;
-
-import java.util.List;
+import org.eclipse.collections.api.set.MutableSet;
 
 public class Slice extends TargettedAction {
 
-    public Slice(Character character){
+    public Slice(BaseCharacter character){
         super(character);
     }
 
     @Override
-    protected List<Character> getAvailableTargets() {
+    protected MutableSet<BaseCharacter> getAvailableTargets() {
         return character.enemyCharacters(character.getSliceRange());
     }
 
     @Override
-    public void perform(Character target) {
+    public void perform(BaseCharacter target) {
         character.slice(target);
     }
 

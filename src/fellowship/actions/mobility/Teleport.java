@@ -1,12 +1,11 @@
 package fellowship.actions.mobility;
 
 import com.ppcg.kothcomm.game.maps.gridmaps.Point2D;
-import fellowship.Character;
-import fellowship.actions.CharacterAction;
+import fellowship.characters.BaseCharacter;
 import fellowship.actions.LocationAction;
 
 public class Teleport extends LocationAction {
-    public Teleport(Character character){
+    public Teleport(BaseCharacter character){
         super(character);
     }
     @Override

@@ -1,11 +1,11 @@
 package fellowship.actions.other;
 
-import fellowship.Character;
+import fellowship.characters.BaseCharacter;
 import fellowship.actions.CharacterAction;
 
 public class Smile extends CharacterAction {
 
-    public Smile(Character character){
+    public Smile(BaseCharacter character){
         super(character);
     }
 

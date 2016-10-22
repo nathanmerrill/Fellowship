@@ -47,10 +47,8 @@ public abstract class Event {
         };
     }
 
-
-
     public static <T> Function<T, Boolean> forever(Consumer<T> consumer){
-        return t -> {
+        return (T t) -> {
             consumer.accept(t);
             return true;
         };
@@ -58,7 +56,7 @@ public abstract class Event {
 
 
     public static <T> Function<T, Boolean> once(Consumer<T> consumer){
-        return t -> {
+        return (T t) -> {
             consumer.accept(t);
             return false;
         };

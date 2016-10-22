@@ -3,14 +3,16 @@ package fellowship.abilities.vision;
 import com.ppcg.kothcomm.game.maps.gridmaps.GridMap;
 import com.ppcg.kothcomm.game.maps.gridmaps.Point2D;
 import fellowship.*;
-import fellowship.Character;
+import fellowship.abilities.CharacterAbility;
+import fellowship.characters.BaseCharacter;
+import fellowship.teams.Team;
 import fellowship.events.Event;
 import fellowship.events.Events;
 
 public class TrueSight implements CharacterAbility {
 
     @Override
-    public void apply(Character character) {
+    public void apply(BaseCharacter character) {
         character.on(Events.TurnStart, Event.forever(i -> {
             GridMap<Point2D, MapObject> map = character.getMap();
             Team enemy = character.getTeam().getEnemyTeam();
@@ -19,8 +21,8 @@ public class TrueSight implements CharacterAbility {
                     .filter(map::isFilled)
                     .map(map::get)
                     .forEach(c -> {
-                        if (c instanceof Character) {
-                            Character ch = (Character) c;
+                        if (c instanceof BaseCharacter) {
+                            BaseCharacter ch = (BaseCharacter) c;
                             if (enemy.contains(ch)){
                                 ch.reveal();
                             }

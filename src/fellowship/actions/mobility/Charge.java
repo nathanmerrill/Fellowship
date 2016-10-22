@@ -1,11 +1,11 @@
 package fellowship.actions.mobility;
 
-import fellowship.Character;
+import fellowship.characters.BaseCharacter;
 import fellowship.actions.CharacterAction;
 
 public class Charge extends CharacterAction {
 
-    public Charge(Character character){
+    public Charge(BaseCharacter character){
         super(character);
     }
 

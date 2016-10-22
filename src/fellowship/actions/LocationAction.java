@@ -1,24 +1,35 @@
 package fellowship.actions;
 
 import com.ppcg.kothcomm.game.maps.gridmaps.Point2D;
-import fellowship.Character;
+import fellowship.characters.BaseCharacter;
+import fellowship.Range;
 
 public abstract class LocationAction extends CharacterAction{
 
-    private final int range;
+    private final Range range;
 
-    public LocationAction(Character character, int range){
+
+    public LocationAction(BaseCharacter character, Range range){
         super(character);
         this.range = range;
     }
 
-    public LocationAction(Character character){
+    public LocationAction(BaseCharacter character, int range){
+        this(character, new Range(range));
+    }
+
+    public LocationAction(BaseCharacter character){
         this(character, 100);
+    }
+
+
+    public Range getRange(){
+        return range;
     }
 
     @Override
     public final void perform() {
-        Point2D location = character.getLocationFor(this, range);
+        Point2D location = character.getLocationFor(this, getRange());
         if (location == null){
             return;
         }

@@ -1,11 +1,11 @@
 package fellowship.actions.damage;
 
-import fellowship.Character;
+import fellowship.characters.BaseCharacter;
 import fellowship.actions.CharacterAction;
 
 public class ChainLightning extends CharacterAction{
 
-    public ChainLightning(Character character){
+    public ChainLightning(BaseCharacter character){
         super(character);
     }
 

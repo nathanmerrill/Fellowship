@@ -1,19 +1,22 @@
 package fellowship.events;
 
 import com.ppcg.kothcomm.game.maps.gridmaps.Point2D;
-import fellowship.Character;
+import fellowship.characters.BaseCharacter;
 
-public class StepEvent implements Event {
-    @Override
-    public void cancel() {
+public class StepEvent extends Event {
+    private final BaseCharacter character;
+    private final Point2D location;
 
+    public StepEvent(BaseCharacter character, Point2D location){
+        this.character = character;
+        this.location = location;
     }
 
-    public Character getCharacter(){
-
+    public BaseCharacter getCharacter(){
+        return character;
     }
 
     public Point2D getLocation(){
-
+        return location;
     }
 }

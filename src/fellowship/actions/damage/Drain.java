@@ -1,24 +1,23 @@
 package fellowship.actions.damage;
 
-import fellowship.Character;
+import fellowship.characters.BaseCharacter;
 import fellowship.actions.TargettedAction;
 import fellowship.events.Events;
-
-import java.util.List;
+import org.eclipse.collections.api.set.MutableSet;
 
 public class Drain extends TargettedAction {
 
-    public Drain(Character character){
+    public Drain(BaseCharacter character){
         super(character);
     }
 
     @Override
-    protected List<Character> getAvailableTargets() {
+    protected MutableSet<BaseCharacter> getAvailableTargets() {
         return character.enemyCharacters();
     }
 
     @Override
-    public void perform(Character target) {
+    public void perform(BaseCharacter target) {
         target.damage(5);
         character.heal(5);
         character.on(Events.TurnStart, t -> {

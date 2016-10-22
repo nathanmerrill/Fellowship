@@ -1,7 +1,7 @@
 package fellowship.abilities.attacking;
 
-import fellowship.Character;
-import fellowship.CharacterAbility;
+import fellowship.characters.BaseCharacter;
+import fellowship.abilities.CharacterAbility;
 import fellowship.events.Event;
 import fellowship.events.Events;
 import fellowship.events.SliceEvent;
@@ -16,7 +16,7 @@ public class Critical implements CharacterAbility{
     }
 
     @Override
-    public void apply(Character character) {
+    public void apply(BaseCharacter character) {
         character.on(Events.Slice, Event.forever(i -> {
             SliceEvent event = (SliceEvent)i;
             if (random.nextDouble() < .3){

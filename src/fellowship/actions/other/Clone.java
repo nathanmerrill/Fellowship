@@ -1,24 +1,27 @@
 package fellowship.actions.other;
 
 import com.ppcg.kothcomm.game.maps.gridmaps.Point2D;
-import fellowship.Character;
+import fellowship.characters.BaseCharacter;
+import fellowship.Stat;
 import fellowship.actions.LocationAction;
 
 public class Clone extends LocationAction {
 
-    public Clone(Character character){
+    public Clone(BaseCharacter character){
         super(character, 6);
     }
     @Override
     public void perform(Point2D location) {
-        Character clone = new Character();
-        character.getStats().forEach(clone::addStat);
+        BaseCharacter clone = new BaseCharacter(character.getActionQueue(), character.getMap(), character.getTeam());
+        for (Stat stat: Stat.values()){
+            character.addStat(stat, character.getStat(stat));
+        }
         character.getAbilities().forEach(clone::addAbility);
         clone.removeMana(character.getMaxMana()-character.getMana());
         clone.damage(character.getMaxHealth()-character.getHealth());
         character.getTeam().addCharacter(clone);
         character.getMap().put(location, clone);
-        //TODO:  add character to time
+        character.start();
 
     }
 

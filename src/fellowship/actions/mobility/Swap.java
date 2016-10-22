@@ -1,28 +1,23 @@
 package fellowship.actions.mobility;
 
 import com.ppcg.kothcomm.game.maps.gridmaps.Point2D;
-import fellowship.Character;
-import fellowship.actions.CharacterAction;
+import fellowship.characters.BaseCharacter;
 import fellowship.actions.TargettedAction;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.eclipse.collections.api.set.MutableSet;
 
 public class Swap extends TargettedAction {
 
-    public Swap(Character character){
+    public Swap(BaseCharacter character){
         super(character);
     }
 
     @Override
-    protected List<Character> getAvailableTargets() {
-        List<Character> characters = new ArrayList<>(character.enemyCharacters());
-        characters.addAll(character.teamCharacters());
-        return characters;
+    protected MutableSet<BaseCharacter> getAvailableTargets() {
+        return character.enemyCharacters().withAll(character.teamCharacters());
     }
 
     @Override
-    public void perform(Character target) {
+    public void perform(BaseCharacter target) {
         Point2D targetLocation = target.getLocation();
         Point2D currentLocation = character.getLocation();
         target.setLocation(currentLocation);

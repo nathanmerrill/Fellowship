@@ -1,25 +1,24 @@
 package fellowship.actions.damage;
 
-import fellowship.Character;
+import fellowship.characters.BaseCharacter;
 import fellowship.actions.TargettedAction;
-
-import java.util.List;
+import org.eclipse.collections.api.set.MutableSet;
 
 public class KO extends TargettedAction {
     public final static double KO_LIMIT = .2;
 
-    public KO(Character character){
+    public KO(BaseCharacter character){
         super(character);
     }
     @Override
-    public void perform(Character target) {
+    public void perform(BaseCharacter target) {
         if (target.getHealth() <= target.getMaxHealth()*KO_LIMIT){
             target.damage(character, target.getHealth());
         }
     }
 
     @Override
-    protected List<Character> getAvailableTargets() {
+    protected MutableSet<BaseCharacter> getAvailableTargets() {
         return character.enemyCharacters();
     }
 
