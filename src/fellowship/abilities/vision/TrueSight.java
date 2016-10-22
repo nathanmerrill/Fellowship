@@ -3,13 +3,13 @@ package fellowship.abilities.vision;
 import com.ppcg.kothcomm.game.maps.gridmaps.GridMap;
 import com.ppcg.kothcomm.game.maps.gridmaps.Point2D;
 import fellowship.*;
-import fellowship.abilities.CharacterAbility;
+import fellowship.abilities.Ability;
 import fellowship.characters.BaseCharacter;
 import fellowship.teams.Team;
 import fellowship.events.Event;
 import fellowship.events.Events;
 
-public class TrueSight implements CharacterAbility {
+public class TrueSight implements Ability {
 
     @Override
     public void apply(BaseCharacter character) {

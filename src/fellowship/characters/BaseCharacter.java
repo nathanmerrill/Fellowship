@@ -3,7 +3,7 @@ package fellowship.characters;
 import com.ppcg.kothcomm.game.maps.gridmaps.GridMap;
 import com.ppcg.kothcomm.game.maps.gridmaps.Point2D;
 import fellowship.*;
-import fellowship.abilities.CharacterAbility;
+import fellowship.abilities.Ability;
 import fellowship.actions.Action;
 import fellowship.actions.ReadonlyAction;
 import fellowship.actions.attacking.Slice;
@@ -32,7 +32,7 @@ public class BaseCharacter implements MapObject, CharacterInterface {
     private final Team team;
     private final GridMap<Point2D, MapObject> map;
     private final ActionQueue actionQueue;
-    private final MutableList<CharacterAbility> abilities;
+    private final MutableList<Ability> abilities;
     private final MutableList<Action> actions;
     private final Action slice, step, smile;
     private final MutableIntList stats;
@@ -176,7 +176,7 @@ public class BaseCharacter implements MapObject, CharacterInterface {
         return dead;
     }
 
-    public void addAbility(CharacterAbility ability){
+    public void addAbility(Ability ability){
         abilities.add(ability);
     }
 
@@ -456,7 +456,7 @@ public class BaseCharacter implements MapObject, CharacterInterface {
         this.maxHealth = max;
     }
 
-    public MutableList<CharacterAbility> getAbilities(){
+    public MutableList<Ability> getAbilities(){
         return abilities.clone();
     }
 

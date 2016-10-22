@@ -1,14 +1,14 @@
 package fellowship.abilities.attacking;
 
 import fellowship.characters.BaseCharacter;
-import fellowship.abilities.CharacterAbility;
+import fellowship.abilities.Ability;
 import fellowship.events.Event;
 import fellowship.events.Events;
 import fellowship.events.SliceEvent;
 
 import java.util.Random;
 
-public class Critical implements CharacterAbility{
+public class Critical implements Ability {
 
     private final Random random;
     public Critical(Random random){

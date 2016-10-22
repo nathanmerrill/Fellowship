@@ -1,9 +1,9 @@
 package fellowship.abilities.stats;
 
 import fellowship.characters.BaseCharacter;
-import fellowship.abilities.CharacterAbility;
+import fellowship.abilities.Ability;
 
-public class Clever implements CharacterAbility {
+public class Clever implements Ability {
 
     @Override
     public void apply(BaseCharacter character) {

@@ -5,7 +5,7 @@ import fellowship.characters.BaseCharacter;
 import org.eclipse.collections.api.block.function.Function;
 
 
-public class ActionAbility implements CharacterAbility {
+public class ActionAbility implements Ability {
     private final Function<BaseCharacter, Action> action;
     private final boolean repeatable;
     private final int numSlots;

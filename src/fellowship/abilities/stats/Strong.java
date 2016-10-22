@@ -1,9 +1,9 @@
 package fellowship.abilities.stats;
 
 import fellowship.characters.BaseCharacter;
-import fellowship.abilities.CharacterAbility;
+import fellowship.abilities.Ability;
 
-public class Strong implements CharacterAbility {
+public class Strong implements Ability {
 
     @Override
     public void apply(BaseCharacter character) {

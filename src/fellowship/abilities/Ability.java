@@ -7,7 +7,7 @@ import fellowship.events.Events;
 
 import java.util.function.Consumer;
 
-public interface CharacterAbility extends AbilityInterface {
+public interface Ability extends AbilityInterface {
     void apply(BaseCharacter character);
     default int getNumSlots(){
         return 1;
@@ -24,7 +24,7 @@ public interface CharacterAbility extends AbilityInterface {
     default String name(){
         return this.getClass().getName();
     }
-    default Class<? extends CharacterAbility> abilityClass(){
+    default Class<? extends Ability> abilityClass(){
         return getClass();
     }
 }

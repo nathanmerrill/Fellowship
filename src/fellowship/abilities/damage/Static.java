@@ -1,11 +1,11 @@
 package fellowship.abilities.damage;
 
 import fellowship.characters.BaseCharacter;
-import fellowship.abilities.CharacterAbility;
+import fellowship.abilities.Ability;
 import fellowship.events.Event;
 import fellowship.events.Events;
 
-public class Static implements CharacterAbility {
+public class Static implements Ability {
 
     @Override
     public void apply(BaseCharacter character) {

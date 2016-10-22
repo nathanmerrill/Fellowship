@@ -1,14 +1,14 @@
 package fellowship.abilities.attacking;
 
 import fellowship.characters.BaseCharacter;
-import fellowship.abilities.CharacterAbility;
+import fellowship.abilities.Ability;
 import fellowship.events.Event;
 import fellowship.events.Events;
 import fellowship.events.SliceEvent;
 
 import java.util.function.Consumer;
 
-public class Swipe implements CharacterAbility{
+public class Swipe implements Ability {
     @Override
     public void apply(BaseCharacter character) {
         character.on(Events.Slice, Event.forever(new Consumer<Event>(){

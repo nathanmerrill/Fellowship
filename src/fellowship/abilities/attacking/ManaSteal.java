@@ -1,12 +1,12 @@
 package fellowship.abilities.attacking;
 
 import fellowship.characters.BaseCharacter;
-import fellowship.abilities.CharacterAbility;
+import fellowship.abilities.Ability;
 import fellowship.events.Event;
 import fellowship.events.Events;
 import fellowship.events.SliceEvent;
 
-public class ManaSteal implements CharacterAbility{
+public class ManaSteal implements Ability {
 
     @Override
     public void apply(BaseCharacter character) {

@@ -3,7 +3,7 @@ package fellowship.characters;
 import com.ppcg.kothcomm.game.maps.gridmaps.Point2D;
 import fellowship.Range;
 import fellowship.Stat;
-import fellowship.abilities.ReadonlyCharacterAbility;
+import fellowship.abilities.ReadonlyAbility;
 import fellowship.actions.ReadonlyAction;
 import fellowship.teams.ReadonlyTeam;
 import org.eclipse.collections.api.list.MutableList;
@@ -123,8 +123,8 @@ public class ReadonlyCharacter implements CharacterInterface {
         return character.getMaxHealth();
     }
 
-    public MutableList<ReadonlyCharacterAbility> getAbilities(){
-        return character.getAbilities().collect(ReadonlyCharacterAbility::new);
+    public MutableList<ReadonlyAbility> getAbilities(){
+        return character.getAbilities().collect(ReadonlyAbility::new);
     }
 
     public ReadonlyTeam getTeam() {

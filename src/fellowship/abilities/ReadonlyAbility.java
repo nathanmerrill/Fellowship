@@ -1,8 +1,8 @@
 package fellowship.abilities;
 
-public class ReadonlyCharacterAbility implements AbilityInterface {
-    private final CharacterAbility ability;
-    public ReadonlyCharacterAbility(CharacterAbility ability){
+public class ReadonlyAbility implements AbilityInterface {
+    private final Ability ability;
+    public ReadonlyAbility(Ability ability){
         this.ability = ability;
     }
 
@@ -16,7 +16,7 @@ public class ReadonlyCharacterAbility implements AbilityInterface {
         return ability.getClass().getName();
     }
 
-    public Class<? extends CharacterAbility> abilityClass(){
+    public Class<? extends Ability> abilityClass(){
         return ability.getClass();
     }
 }

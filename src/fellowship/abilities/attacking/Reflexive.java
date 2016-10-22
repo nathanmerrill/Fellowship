@@ -1,14 +1,14 @@
 package fellowship.abilities.attacking;
 
 import fellowship.characters.BaseCharacter;
-import fellowship.abilities.CharacterAbility;
+import fellowship.abilities.Ability;
 import fellowship.events.Events;
 import fellowship.events.SliceEvent;
 
-public class Reflexive implements CharacterAbility{
+public class Reflexive implements Ability {
     @Override
     public void apply(BaseCharacter character) {
-        CharacterAbility.addCooldown(3, character, Events.Death, event -> {
+        Ability.addCooldown(3, character, Events.Death, event -> {
             character.slice(((SliceEvent)event).getSlicer());
         });
     }

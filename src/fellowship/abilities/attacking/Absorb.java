@@ -1,13 +1,13 @@
 package fellowship.abilities.attacking;
 
 import fellowship.characters.BaseCharacter;
-import fellowship.abilities.CharacterAbility;
+import fellowship.abilities.Ability;
 import fellowship.Stat;
 import fellowship.events.Event;
 import fellowship.events.Events;
 import fellowship.events.SliceEvent;
 
-public class Absorb implements CharacterAbility{
+public class Absorb implements Ability {
 
     @Override
     public void apply(BaseCharacter character) {

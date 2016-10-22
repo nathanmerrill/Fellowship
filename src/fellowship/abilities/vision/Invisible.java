@@ -1,11 +1,11 @@
 package fellowship.abilities.vision;
 
 import fellowship.characters.BaseCharacter;
-import fellowship.abilities.CharacterAbility;
+import fellowship.abilities.Ability;
 import fellowship.events.Event;
 import fellowship.events.Events;
 
-public class Invisible implements CharacterAbility {
+public class Invisible implements Ability {
 
     @Override
     public void apply(BaseCharacter character) {

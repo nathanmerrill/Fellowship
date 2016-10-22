@@ -1,11 +1,11 @@
 package fellowship.abilities.statuses;
 
 import fellowship.characters.BaseCharacter;
-import fellowship.abilities.CharacterAbility;
+import fellowship.abilities.Ability;
 import fellowship.events.Event;
 import fellowship.events.Events;
 
-public class Immune implements CharacterAbility {
+public class Immune implements Ability {
 
     @Override
     public void apply(BaseCharacter character) {

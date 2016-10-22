@@ -1,11 +1,11 @@
 package fellowship.abilities.attacking;
 
 import fellowship.characters.BaseCharacter;
-import fellowship.abilities.CharacterAbility;
+import fellowship.abilities.Ability;
 import fellowship.events.Event;
 import fellowship.events.Events;
 
-public class Drain implements CharacterAbility{
+public class Drain implements Ability {
 
     @Override
     public void apply(BaseCharacter character) {
