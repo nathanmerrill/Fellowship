@@ -1,5 +1,6 @@
 package fellowship.actions.mobility;
 
+
 import fellowship.characters.BaseCharacter;
 import fellowship.actions.Action;
 
@@ -11,7 +12,7 @@ public class Alert extends Action {
 
     @Override
     public void perform() {
-        character.teamCharacters().forEach(BaseCharacter::step);
+        character.teammates().forEach(BaseCharacter::step);
     }
 
     @Override

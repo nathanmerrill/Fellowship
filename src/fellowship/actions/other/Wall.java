@@ -1,6 +1,6 @@
 package fellowship.actions.other;
 
-import com.ppcg.kothcomm.game.maps.gridmaps.Point2D;
+import com.nmerrill.kothcomm.game.maps.Point2D;
 import fellowship.characters.BaseCharacter;
 import fellowship.WallObject;
 import fellowship.actions.LocationAction;

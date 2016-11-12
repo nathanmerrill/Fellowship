@@ -1,10 +1,11 @@
 package fellowship;
 
 public class Range {
-    private boolean isCardinal;
-    private int range;
+    private final boolean isCardinal;
+    private final int range;
     public Range(int range, boolean isCardinal){
-
+        this.range = range;
+        this.isCardinal = isCardinal;
     }
     public Range(int range){
         this(range, false);

@@ -11,7 +11,7 @@ public class Weave extends Action {
 
     @Override
     public void perform() {
-        character.enemyCharacters()
+        character.visibleEnemies()
                 .forEach(character::slice);
     }
 

@@ -6,7 +6,7 @@ import fellowship.events.DamageEvent;
 import fellowship.events.Event;
 import fellowship.events.Events;
 
-public class Spikes implements Ability {
+public class Spikes extends Ability {
 
     @Override
     public void apply(BaseCharacter character) {

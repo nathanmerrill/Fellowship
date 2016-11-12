@@ -7,24 +7,33 @@ import fellowship.events.Events;
 
 import java.util.function.Consumer;
 
-public interface Ability extends AbilityInterface {
-    void apply(BaseCharacter character);
-    default int getNumSlots(){
+public abstract class Ability {
+    private final ReadonlyAbility readonly;
+    public Ability(){
+        this.readonly = new ReadonlyAbility(this);
+    }
+    public abstract void apply(BaseCharacter character);
+    public int getNumSlots(){
         return 1;
     }
-    default boolean repeatable() {return false;}
+    public boolean repeatable() {return false;}
 
-    static void addCooldown(int cooldown, BaseCharacter character, Events eventType, Consumer<Event> consumer){
+    public static void addCooldown(int cooldown, BaseCharacter character, Events eventType, Consumer<Event> consumer){
         character.on(eventType, Event.once(event -> {
             consumer.accept(event);
             character.on(Events.TurnStart, Event.after(cooldown, i -> addCooldown(cooldown, character, eventType, consumer)));
         }));
     }
 
-    default String name(){
-        return this.getClass().getName();
+    public int attributePoints(){
+        return 0;
     }
-    default Class<? extends Ability> abilityClass(){
-        return getClass();
+
+    public ReadonlyAbility readonly() {
+        return readonly;
+    }
+
+    public String getName(){
+        return getClass().getName();
     }
 }

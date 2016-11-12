@@ -8,18 +8,13 @@ import fellowship.events.SliceEvent;
 
 import java.util.Random;
 
-public class Critical implements Ability {
-
-    private final Random random;
-    public Critical(Random random){
-        this.random = random;
-    }
+public class Critical extends Ability {
 
     @Override
     public void apply(BaseCharacter character) {
         character.on(Events.Slice, Event.forever(i -> {
             SliceEvent event = (SliceEvent)i;
-            if (random.nextDouble() < .3){
+            if (character.getRandom().nextDouble() < .3){
                 event.setAmount(event.getAmount()*2);
             }
         }));

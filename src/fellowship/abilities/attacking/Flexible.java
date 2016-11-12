@@ -4,7 +4,7 @@ import fellowship.characters.BaseCharacter;
 import fellowship.abilities.Ability;
 import fellowship.Range;
 
-public class Flexible implements Ability {
+public class Flexible extends Ability {
     @Override
     public void apply(BaseCharacter character) {
         character.setStepRange(new Range(character.getSliceRange().getRange()));

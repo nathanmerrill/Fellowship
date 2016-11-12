@@ -2,7 +2,6 @@ package fellowship.actions.damage;
 
 import fellowship.characters.BaseCharacter;
 import fellowship.actions.TargettedAction;
-import org.eclipse.collections.api.set.MutableSet;
 
 public class Zap extends TargettedAction{
 
@@ -13,11 +12,6 @@ public class Zap extends TargettedAction{
     @Override
     public void perform(BaseCharacter target) {
         target.damage(character, 30);
-    }
-
-    @Override
-    protected MutableSet<BaseCharacter> getAvailableTargets() {
-        return character.enemyCharacters();
     }
 
     @Override

@@ -1,6 +1,6 @@
 package fellowship.actions.other;
 
-import com.ppcg.kothcomm.game.maps.gridmaps.Point2D;
+import com.nmerrill.kothcomm.game.maps.Point2D;
 import fellowship.characters.BaseCharacter;
 import fellowship.Stat;
 import fellowship.actions.LocationAction;
@@ -12,7 +12,7 @@ public class Clone extends LocationAction {
     }
     @Override
     public void perform(Point2D location) {
-        BaseCharacter clone = new BaseCharacter(character.getActionQueue(), character.getMap(), character.getTeam());
+        BaseCharacter clone = new BaseCharacter(character.getActionQueue(), character.getMap(), character.getTeam(), character.getRandom());
         for (Stat stat: Stat.values()){
             character.addStat(stat, character.getStat(stat));
         }
@@ -20,7 +20,7 @@ public class Clone extends LocationAction {
         clone.removeMana(character.getMaxMana()-character.getMana());
         clone.damage(character.getMaxHealth()-character.getHealth());
         character.getTeam().addCharacter(clone);
-        character.getMap().put(location, clone);
+        character.setLocation(location);
         character.start();
 
     }

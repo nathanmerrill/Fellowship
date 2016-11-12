@@ -4,7 +4,7 @@ import fellowship.characters.BaseCharacter;
 import fellowship.abilities.Ability;
 import fellowship.events.Events;
 
-public class Resurrect implements Ability {
+public class Resurrect extends Ability {
 
     @Override
     public void apply(BaseCharacter character) {

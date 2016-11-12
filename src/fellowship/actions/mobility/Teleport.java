@@ -1,6 +1,6 @@
 package fellowship.actions.mobility;
 
-import com.ppcg.kothcomm.game.maps.gridmaps.Point2D;
+import com.nmerrill.kothcomm.game.maps.Point2D;
 import fellowship.characters.BaseCharacter;
 import fellowship.actions.LocationAction;
 

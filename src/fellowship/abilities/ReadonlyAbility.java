@@ -1,6 +1,6 @@
 package fellowship.abilities;
 
-public class ReadonlyAbility implements AbilityInterface {
+public final class ReadonlyAbility {
     private final Ability ability;
     public ReadonlyAbility(Ability ability){
         this.ability = ability;
@@ -13,10 +13,6 @@ public class ReadonlyAbility implements AbilityInterface {
     public boolean repeatable() {return ability.repeatable();}
 
     public String name(){
-        return ability.getClass().getName();
-    }
-
-    public Class<? extends Ability> abilityClass(){
-        return ability.getClass();
+        return ability.getName();
     }
 }

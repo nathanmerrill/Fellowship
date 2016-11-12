@@ -6,7 +6,7 @@ import fellowship.Stat;
 import fellowship.events.Event;
 import fellowship.events.Events;
 
-public class Focused implements Ability {
+public class Focused extends Ability {
 
     @Override
     public void apply(BaseCharacter character) {

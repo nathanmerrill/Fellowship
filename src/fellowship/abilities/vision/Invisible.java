@@ -5,12 +5,12 @@ import fellowship.abilities.Ability;
 import fellowship.events.Event;
 import fellowship.events.Events;
 
-public class Invisible implements Ability {
+public class Invisible extends Ability {
 
     @Override
     public void apply(BaseCharacter character) {
         character.on(Events.TurnStart, Event.forever(i -> {
-            if (!character.getTeam().getEnemyTeam().getCharacters().get(0).enemyCharacters().contains(character)){
+            if (!character.getTeam().getEnemyTeam().getCharacters().get(0).visibleEnemies().contains(character)){
                 character.invisible(1000000);
             }
         }));

@@ -12,14 +12,18 @@ public class KO extends TargettedAction {
     }
     @Override
     public void perform(BaseCharacter target) {
-        if (target.getHealth() <= target.getMaxHealth()*KO_LIMIT){
+        if (canTarget(target)) {
             target.damage(character, target.getHealth());
         }
     }
 
+    private boolean canTarget(BaseCharacter target){
+        return target.getHealth() <= target.getMaxHealth()*KO_LIMIT;
+    }
+
     @Override
-    protected MutableSet<BaseCharacter> getAvailableTargets() {
-        return character.enemyCharacters();
+    public MutableSet<BaseCharacter> availableTargets() {
+        return super.availableTargets().select(this::canTarget);
     }
 
     @Override

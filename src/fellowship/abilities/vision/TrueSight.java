@@ -1,25 +1,24 @@
 package fellowship.abilities.vision;
 
-import com.ppcg.kothcomm.game.maps.gridmaps.GridMap;
-import com.ppcg.kothcomm.game.maps.gridmaps.Point2D;
+import com.nmerrill.kothcomm.game.maps.graphmaps.GraphMap;
+import com.nmerrill.kothcomm.game.maps.Point2D;
 import fellowship.*;
 import fellowship.abilities.Ability;
 import fellowship.characters.BaseCharacter;
-import fellowship.teams.Team;
+import fellowship.characters.Team;
 import fellowship.events.Event;
 import fellowship.events.Events;
 
-public class TrueSight implements Ability {
+public class TrueSight extends Ability {
 
     @Override
     public void apply(BaseCharacter character) {
         character.on(Events.TurnStart, Event.forever(i -> {
-            GridMap<Point2D, MapObject> map = character.getMap();
+            GraphMap<Point2D, MapObject> map = character.getMap();
             Team enemy = character.getTeam().getEnemyTeam();
             character.rangeAround(new Range(2))
-                    .stream()
-                    .filter(map::isFilled)
-                    .map(map::get)
+                    .select(map::isFilled)
+                    .collect(map::get)
                     .forEach(c -> {
                         if (c instanceof BaseCharacter) {
                             BaseCharacter ch = (BaseCharacter) c;

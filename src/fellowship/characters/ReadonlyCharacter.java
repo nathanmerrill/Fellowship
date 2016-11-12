@@ -1,15 +1,15 @@
 package fellowship.characters;
 
-import com.ppcg.kothcomm.game.maps.gridmaps.Point2D;
+import com.nmerrill.kothcomm.game.maps.Point2D;
 import fellowship.Range;
 import fellowship.Stat;
+import fellowship.abilities.Ability;
 import fellowship.abilities.ReadonlyAbility;
 import fellowship.actions.ReadonlyAction;
-import fellowship.teams.ReadonlyTeam;
 import org.eclipse.collections.api.list.MutableList;
-import org.eclipse.collections.api.set.MutableSet;
+import org.eclipse.collections.api.map.MutableMap;
 
-public class ReadonlyCharacter implements CharacterInterface {
+public final class  ReadonlyCharacter {
     private final BaseCharacter character;
     public ReadonlyCharacter(BaseCharacter character){
         this.character = character;
@@ -29,10 +29,6 @@ public class ReadonlyCharacter implements CharacterInterface {
 
     public int getStat(Stat stat){
         return character.getStat(stat);
-    }
-
-    public Range getSightRange(){
-        return character.getSightRange();
     }
 
     public ReadonlyAction getLastAction(){
@@ -67,28 +63,16 @@ public class ReadonlyCharacter implements CharacterInterface {
         return character.isDead();
     }
 
-    public MutableSet<ReadonlyCharacter> teamCharacters(Range range){
-        return character.teamCharacters(range).collect(ReadonlyCharacter::new);
+    public MutableMap<Point2D, EnemyCharacter> visibleEnemies(Range range){
+        return character.visibleEnemies(range).toMap(BaseCharacter::getLocation, BaseCharacter::enemy);
     }
 
-    public MutableSet<ReadonlyCharacter> teamCharacters(int range){
-        return character.teamCharacters(range).collect(ReadonlyCharacter::new);
+    public MutableMap<Point2D, EnemyCharacter> visibleEnemies(int range){
+        return character.visibleEnemies(range).toMap(BaseCharacter::getLocation, BaseCharacter::enemy);
     }
 
-    public MutableSet<ReadonlyCharacter> teamCharacters(){
-        return character.teamCharacters().collect(ReadonlyCharacter::new);
-    }
-
-    public MutableSet<EnemyCharacter> enemyCharacters(Range range){
-        return character.enemyCharacters(range).collect(EnemyCharacter::new);
-    }
-
-    public MutableSet<EnemyCharacter> enemyCharacters(int range){
-        return character.enemyCharacters(range).collect(EnemyCharacter::new);
-    }
-
-    public MutableSet<EnemyCharacter> enemyCharacters(){
-        return character.enemyCharacters().collect(EnemyCharacter::new);
+    public MutableMap<Point2D, EnemyCharacter> visibleEnemies(){
+        return character.visibleEnemies().toMap(BaseCharacter::getLocation, BaseCharacter::enemy);
     }
 
     public Stat primaryStat(){
@@ -97,6 +81,10 @@ public class ReadonlyCharacter implements CharacterInterface {
 
     public Point2D getLocation(){
         return character.getLocation();
+    }
+
+    public Range getSightRange(){
+        return character.getSightRange();
     }
 
     public Range getStepRange(){
@@ -124,13 +112,8 @@ public class ReadonlyCharacter implements CharacterInterface {
     }
 
     public MutableList<ReadonlyAbility> getAbilities(){
-        return character.getAbilities().collect(ReadonlyAbility::new);
+        return character.getAbilities().collect(Ability::readonly);
     }
-
-    public ReadonlyTeam getTeam() {
-        return new ReadonlyTeam(character.getTeam());
-    }
-
 
     public Class<? extends BaseCharacter> characterClass(){
         return character.getClass();

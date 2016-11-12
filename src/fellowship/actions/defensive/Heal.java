@@ -2,7 +2,6 @@ package fellowship.actions.defensive;
 
 import fellowship.characters.BaseCharacter;
 import fellowship.actions.TargettedAction;
-import org.eclipse.collections.api.set.MutableSet;
 
 public class Heal extends TargettedAction {
 
@@ -11,8 +10,13 @@ public class Heal extends TargettedAction {
     }
 
     @Override
-    protected MutableSet<BaseCharacter> getAvailableTargets() {
-        return character.teamCharacters();
+    public boolean canTargetEnemies() {
+        return false;
+    }
+
+    @Override
+    public boolean canTargetTeam() {
+        return true;
     }
 
     @Override

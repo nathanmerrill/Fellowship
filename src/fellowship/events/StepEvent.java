@@ -1,6 +1,6 @@
 package fellowship.events;
 
-import com.ppcg.kothcomm.game.maps.gridmaps.Point2D;
+import com.nmerrill.kothcomm.game.maps.Point2D;
 import fellowship.characters.BaseCharacter;
 
 public class StepEvent extends Event {

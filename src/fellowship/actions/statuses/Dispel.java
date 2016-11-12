@@ -2,17 +2,16 @@ package fellowship.actions.statuses;
 
 import fellowship.characters.BaseCharacter;
 import fellowship.actions.TargettedAction;
-import org.eclipse.collections.api.set.MutableSet;
 
-public class Dispel extends TargettedAction{
+public class Dispel extends TargettedAction {
 
     public Dispel(BaseCharacter character){
         super(character);
     }
 
     @Override
-    protected MutableSet<BaseCharacter> getAvailableTargets() {
-        return character.enemyCharacters().withAll(character.teamCharacters());
+    public boolean canTargetTeam() {
+        return true;
     }
 
     @Override

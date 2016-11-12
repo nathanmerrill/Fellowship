@@ -1,11 +1,12 @@
 package fellowship.actions.other;
 
+import fellowship.Range;
+
 import fellowship.characters.BaseCharacter;
 import fellowship.actions.Action;
 import fellowship.actions.TargettedAction;
 import fellowship.events.Event;
 import fellowship.events.Events;
-import org.eclipse.collections.api.set.MutableSet;
 
 public class Steal extends TargettedAction {
 
@@ -14,8 +15,8 @@ public class Steal extends TargettedAction {
     }
 
     @Override
-    protected MutableSet<BaseCharacter> getAvailableTargets() {
-        return character.enemyCharacters(4);
+    public Range getRange() {
+        return new Range(4);
     }
 
     @Override

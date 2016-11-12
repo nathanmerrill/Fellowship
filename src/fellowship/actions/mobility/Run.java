@@ -1,5 +1,6 @@
 package fellowship.actions.mobility;
 
+
 import fellowship.characters.BaseCharacter;
 import fellowship.actions.Action;
 

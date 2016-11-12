@@ -1,5 +1,6 @@
 package fellowship.actions.defensive;
 
+
 import fellowship.characters.BaseCharacter;
 import fellowship.actions.Action;
 import fellowship.events.Event;

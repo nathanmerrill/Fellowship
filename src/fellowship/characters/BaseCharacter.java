@@ -1,43 +1,52 @@
 package fellowship.characters;
 
-import com.ppcg.kothcomm.game.maps.gridmaps.GridMap;
-import com.ppcg.kothcomm.game.maps.gridmaps.Point2D;
-import fellowship.*;
+import com.nmerrill.kothcomm.game.maps.Point2D;
+import com.nmerrill.kothcomm.game.maps.graphmaps.GraphMap;
+import com.nmerrill.kothcomm.utils.ActionQueue;
+import com.nmerrill.kothcomm.utils.Cache;
+import com.nmerrill.kothcomm.utils.EventManager;
+import fellowship.MapObject;
+import fellowship.Player;
+import fellowship.Range;
+import fellowship.Stat;
 import fellowship.abilities.Ability;
 import fellowship.actions.Action;
 import fellowship.actions.ReadonlyAction;
 import fellowship.actions.attacking.Slice;
 import fellowship.actions.mobility.Step;
 import fellowship.actions.other.Smile;
-import fellowship.teams.Team;
 import fellowship.events.*;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.list.primitive.MutableIntList;
 import org.eclipse.collections.api.map.MutableMap;
 import org.eclipse.collections.api.set.MutableSet;
 import org.eclipse.collections.impl.factory.Lists;
+import org.eclipse.collections.impl.factory.Maps;
 import org.eclipse.collections.impl.factory.Sets;
 import org.eclipse.collections.impl.factory.primitive.IntLists;
 
+import java.util.Random;
 import java.util.function.Function;
 
-public class BaseCharacter implements MapObject, CharacterInterface {
-    public final static int STARTING_ATTRIBUTE_POINTS = 20;
+public class BaseCharacter implements MapObject {
+
     public final static double MANA_REGEN_PER_INT = .1;
     public final static double HEALTH_REGEN_PER_STR = .5;
     public final static int MANA_PER_INT = 7;
     public final static int HEALTH_PER_STR = 10;
     public final static int DELAY_PER_AGI = 1;
-
+    private final ReadonlyCharacter readonly;
+    private final EnemyCharacter enemy;
     private final Team team;
-    private final GridMap<Point2D, MapObject> map;
+    private final GraphMap<Point2D, MapObject> map;
     private final ActionQueue actionQueue;
+    private final Random random;
     private final MutableList<Ability> abilities;
     private final MutableList<Action> actions;
     private final Action slice, step, smile;
     private final MutableIntList stats;
+    private final MutableMap<Range, Cache<MutableSet<Point2D>>> cached;
     private Stat primary;
-    private int attributePoints;
     private int smartness, cleverness;
     private double health, mana;
     private int maxHealth, maxMana;
@@ -54,28 +63,37 @@ public class BaseCharacter implements MapObject, CharacterInterface {
     private EventManager eventManager;
     private Point2D currentLocation;
 
-
-    public BaseCharacter(ActionQueue actionQueue, GridMap<Point2D, MapObject> map, Team team){
+    public BaseCharacter(ActionQueue actionQueue, GraphMap<Point2D, MapObject> map, Team team, Random random){
         abilities = Lists.mutable.empty();
         actions = Lists.mutable.empty();
         stats = IntLists.mutable.of(0,0,0);
         this.map = map;
         this.team = team;
+        this.random = random;
+        cached = Maps.mutable.empty();
         team.addCharacter(this);
-        this.attributePoints = STARTING_ATTRIBUTE_POINTS;
         this.sightRange = new Range(2);
         this.sliceRange = new Range(1, true);
         this.stepRange = new Range(1, true);
         this.delay = 100;
         this.actionQueue = actionQueue;
         this.eventManager = new EventManager();
-        this.turn = -1;
         this.slice = new Slice(this);
         this.step = new Step(this);
         this.smile = new Smile(this);
         this.actions.add(slice);
         this.actions.add(step);
         this.actions.add(smile);
+        this.silenceTurn = -1;
+        this.poisonTurn = -1;
+        this.frozenTurn = -1;
+        this.invisibleTurn = -1;
+        this.readonly = new ReadonlyCharacter(this);
+        this.enemy = new EnemyCharacter(this);
+    }
+
+    public Random getRandom() {
+        return random;
     }
 
     public ActionQueue getActionQueue() {
@@ -85,18 +103,6 @@ public class BaseCharacter implements MapObject, CharacterInterface {
     public void start(){
         primary = Stat.values()[stats.indexOf(stats.max())];
         actionQueue.enqueue(this::action, 0);
-    }
-
-    public void addAttributePoints(int points){
-        attributePoints += points;
-    }
-
-    public int getAttributePoints() {
-        return attributePoints;
-    }
-
-    public void removeAttributePoints(int points){
-        attributePoints -= points;
     }
 
     public void setSmartness(int smartness){
@@ -127,6 +133,10 @@ public class BaseCharacter implements MapObject, CharacterInterface {
         actions.remove(action);
     }
 
+    public MutableList<Action> getActions() {
+        return actions;
+    }
+
     public Range getSightRange(){
         return sightRange;
     }
@@ -136,7 +146,7 @@ public class BaseCharacter implements MapObject, CharacterInterface {
     }
 
     public void addStat(Stat stat, int amount){
-        stats.addAtIndex(stat.ordinal(), amount);
+        stats.set(stat.ordinal(), stats.get(stat.ordinal())+amount);
         switch (stat){
             case STR:
                 maxHealth += HEALTH_PER_STR*amount;
@@ -178,12 +188,12 @@ public class BaseCharacter implements MapObject, CharacterInterface {
 
     public void addAbility(Ability ability){
         abilities.add(ability);
+        ability.apply(this);
     }
 
     public Action getLastAction(){
         return lastAction;
     }
-
 
     public void slow(int amount){
         delay += amount;
@@ -207,7 +217,6 @@ public class BaseCharacter implements MapObject, CharacterInterface {
         }
         turn++;
         Player player = team.getPlayer();
-        player.setCurrentCharacter(new ReadonlyCharacter(this));
         TurnStartEvent event = new TurnStartEvent();
         eventManager.addEvent(event, Events.TurnStart);
         if (event.isCanceled()){
@@ -216,28 +225,22 @@ public class BaseCharacter implements MapObject, CharacterInterface {
         if (isPoisoned()){
             damage(getPoisonAmount());
         }
-        MutableList<Action> actions = this.actions.select(Action::isAvailable);
 
-        if (isStunned()){
-            actions = actions.selectWith(Object::equals, smile);
+        MutableSet<Action> actions = this.actions.select(Action::isAvailable).tap(Action::clearSelection).toSet();
+        MutableMap<ReadonlyAction, Action> readonlyActions = actions.toMap(Action::readonly, i->i);
+        player.setVisibleEnemies(visibleEnemies().toMap(BaseCharacter::getLocation, BaseCharacter::enemy));
+        ReadonlyAction choice = player.choose(readonlyActions.keysView().toSet(), readonly);
+        if (!readonlyActions.containsKey(choice)){
+            throw new RuntimeException("Invalid action");
         }
-        if (isSilenced()){
-            actions = actions.select(Action::basicAction);
-        }
-        if (isFrozen()){
-            actions = actions.reject(Action::movementAction);
-        }
-        MutableMap<ReadonlyAction, Action> availableActions = actions.toMap(ReadonlyAction::new, i -> i);
+        Action action = readonlyActions.get(choice);
 
-        ReadonlyAction choice = player.choose(availableActions.keysView().toSet());
-        if (availableActions.contains(choice)){
-            if (choice.breaksInvisibility()){
-                invisibleTurn = -1;
-            }
-            availableActions.get(choice).perform();
-            if (!choice.basicAction()){
-                lastAction = availableActions.get(choice);
-            }
+        if (action.breaksInvisibility()){
+            invisibleTurn = -1;
+        }
+        action.act();
+        if (!action.basicAction()){
+            lastAction = action;
         }
         return delay;
     }
@@ -313,73 +316,55 @@ public class BaseCharacter implements MapObject, CharacterInterface {
     }
 
     public MutableSet<Point2D> rangeAround(Range range){
-        MutableSet<Point2D> points = Sets.mutable.empty();
-        points.add(currentLocation);
-        GridMap<Point2D, MapObject> map = getMap();
-        if (range.isCardinal()){
-            for (int i = 1; i <= range.getRange(); i++){
-                points.add(currentLocation.moveX(i));
-                points.add(currentLocation.moveY(i));
-                points.add(currentLocation.moveX(-i));
-                points.add(currentLocation.moveY(-i));
+        return cached.getIfAbsentPut(range, Cache::new).get(() -> {
+            MutableSet<Point2D> points = Sets.mutable.empty();
+            points.add(currentLocation);
+            GraphMap<Point2D, MapObject> map = getMap();
+            if (range.isCardinal()) {
+                for (int i = 1; i <= range.getRange(); i++) {
+                    points.add(currentLocation.moveX(i));
+                    points.add(currentLocation.moveY(i));
+                    points.add(currentLocation.moveX(-i));
+                    points.add(currentLocation.moveY(-i));
+                }
+            } else {
+                points.addAll(map.getNeighbors(currentLocation, range.getRange()));
             }
-            points.removeIf(map::contains);
-        } else {
-            points.addAll(map.getNeighbors(currentLocation, range.getRange()));
-        }
-        return points;
+            return points.select(map::inBounds);
+        });
     }
 
-    public BaseCharacter getTargetFor(Action action, MutableSet<BaseCharacter> options){
-        Player player = team.getPlayer();
-        player.setCurrentAction(new ReadonlyAction(action));
-        player.setCurrentCharacter(new ReadonlyCharacter(this));
-        ReadonlyCharacter readonly = team.getPlayer().target(options.collect(ReadonlyCharacter::new));
-        if (readonly == null){
-            return null;
-        }
-        BaseCharacter character = readonly.getCharacter();
-        if (options.contains(character)){
-            return character;
-        }
-        return null;
+    public MutableSet<BaseCharacter> teammates(Range range){
+        return characters(range).intersect(teammates());
     }
 
-    public Point2D getLocationFor(Action action, Range range){
-        Player player = team.getPlayer();
-        player.setCurrentAction(new ReadonlyAction(action));
-        player.setCurrentCharacter(new ReadonlyCharacter(this));
-        return player.locate(rangeAround(range).reject(this.getMap()::isFilled));
+    public MutableSet<BaseCharacter> teammates(int range){
+        return teammates(new Range(range));
     }
 
-    public MutableSet<BaseCharacter> teamCharacters(Range range){
-        return characters(range).intersect(teamCharacters());
-    }
-
-    public MutableSet<BaseCharacter> teamCharacters(int range){
-        return teamCharacters(new Range(range));
-    }
-
-    public MutableSet<BaseCharacter> teamCharacters(){
+    public MutableSet<BaseCharacter> teammates(){
         return team.getCharacters().toSet().without(this);
     }
 
-    public MutableSet<BaseCharacter> enemyCharacters(int range){
-        return enemyCharacters(new Range(range));
+    public MutableSet<BaseCharacter> visibleEnemies(int range){
+        return visibleEnemies(new Range(range));
     }
 
-    public MutableSet<BaseCharacter> enemyCharacters(Range range){
-        return characters(range).reject(team::contains).reject(BaseCharacter::isInvisible);
+    public MutableSet<BaseCharacter> visibleEnemies(Range range){
+        return characters(range)
+                .reject(team::contains)
+                .reject(BaseCharacter::isInvisible)
+                .select(p -> team.getCharacters().anySatisfy(c -> c.characters(c.getSightRange()).contains(p)));
     }
 
-    public MutableSet<BaseCharacter> enemyCharacters(){
-        return enemyCharacters(1000);
+    public MutableSet<BaseCharacter> visibleEnemies(){
+        return visibleEnemies(1000);
     }
 
     public MutableSet<BaseCharacter> characters(Range range){
         return rangeAround(range)
-                .select(getMap()::isFilled)
-                .collect(getMap()::get)
+                .select(map::isFilled)
+                .collect(map::get)
                 .collectIf(i -> i instanceof BaseCharacter, i -> (BaseCharacter) i);
     }
 
@@ -391,19 +376,31 @@ public class BaseCharacter implements MapObject, CharacterInterface {
 
     public void damage(double amount){
         this.health -= amount;
-
+        if (this.health <= 0){
+            die();
+        }
     }
 
     public void die(){
+        DeathEvent event = new DeathEvent();
+        eventManager.addEvent(event, Events.Death);
+        if (event.isCanceled()){
+            return;
+        }
         this.dead = true;
         this.team.removeCharacter(this);
-        this.getMap().clear(currentLocation);
+        this.map.clear(currentLocation);
         currentLocation = null;
     }
 
     public void setLocation(Point2D location){
-        if (getMap().contains(location) && getMap().isEmpty(location)) {
-            getMap().move(currentLocation, location);
+        if (map.inBounds(location) && getMap().isEmpty(location)) {
+            cached.clear();
+            if (currentLocation == null){
+                map.put(location, this);
+            } else {
+                map.move(currentLocation, location);
+            }
             currentLocation = location;
         }
     }
@@ -460,17 +457,24 @@ public class BaseCharacter implements MapObject, CharacterInterface {
         return abilities.clone();
     }
 
-    @Override
     public Team getTeam() {
         return team;
     }
 
-    public GridMap<Point2D, MapObject> getMap(){
+    public GraphMap<Point2D, MapObject> getMap(){
         return map;
     }
 
+    public ReadonlyCharacter readonly(){
+        return readonly;
+    }
+
+    public EnemyCharacter enemy(){
+        return enemy;
+    }
+
     @Override
-    public Class<? extends BaseCharacter> characterClass() {
-        return getClass();
+    public String toString() {
+        return getTeam().getPlayer().getName()+" Character";
     }
 }

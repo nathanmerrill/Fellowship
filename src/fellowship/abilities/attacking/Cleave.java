@@ -6,7 +6,7 @@ import fellowship.events.Event;
 import fellowship.events.Events;
 import fellowship.events.SliceEvent;
 
-public class Cleave implements Ability {
+public class Cleave extends Ability {
 
     @Override
     public void apply(BaseCharacter character) {
@@ -14,7 +14,7 @@ public class Cleave implements Ability {
             SliceEvent event = (SliceEvent)i;
             BaseCharacter target = event.getSliced();
             double damage = event.getAmount()/2;
-            target.teamCharacters(1).forEach(c -> c.damage(character, damage));
+            target.teammates(1).forEach(c -> c.damage(character, damage));
         }));
     }
 }

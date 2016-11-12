@@ -7,7 +7,7 @@ import fellowship.events.Event;
 import fellowship.events.Events;
 import fellowship.events.SliceEvent;
 
-public class Absorb implements Ability {
+public class Absorb extends Ability {
 
     @Override
     public void apply(BaseCharacter character) {

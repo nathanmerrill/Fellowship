@@ -5,7 +5,7 @@ import fellowship.abilities.Ability;
 import fellowship.events.Event;
 import fellowship.events.Events;
 
-public class Drain implements Ability {
+public class Feast extends Ability {
 
     @Override
     public void apply(BaseCharacter character) {

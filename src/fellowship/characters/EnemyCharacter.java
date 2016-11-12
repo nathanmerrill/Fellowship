@@ -1,13 +1,14 @@
 package fellowship.characters;
 
-import com.ppcg.kothcomm.game.maps.gridmaps.Point2D;
+import com.nmerrill.kothcomm.game.maps.Point2D;
 import fellowship.*;
+import fellowship.abilities.Ability;
 import fellowship.abilities.ReadonlyAbility;
 import fellowship.actions.ReadonlyAction;
-import fellowship.teams.EnemyTeam;
 import org.eclipse.collections.api.list.MutableList;
+import org.eclipse.collections.api.map.MutableMap;
 
-public class EnemyCharacter implements CharacterInterface {
+public final class EnemyCharacter {
     private final BaseCharacter character;
 
     public EnemyCharacter(BaseCharacter character){
@@ -66,16 +67,24 @@ public class EnemyCharacter implements CharacterInterface {
         return character.primaryStat();
     }
 
-    public Point2D getLocation(){
-        return character.getLocation();
-    }
-
     public Range getStepRange(){
         return character.getStepRange();
     }
 
     public Range getSliceRange() {
         return character.getSliceRange();
+    }
+
+    public MutableMap<Point2D, EnemyCharacter> visibleEnemies(Range range){
+        return character.visibleEnemies(range).toMap(BaseCharacter::getLocation, BaseCharacter::enemy);
+    }
+
+    public MutableMap<Point2D, EnemyCharacter> visibleEnemies(int range){
+        return character.visibleEnemies(range).toMap(BaseCharacter::getLocation, BaseCharacter::enemy);
+    }
+
+    public MutableMap<Point2D, EnemyCharacter> visibleEnemies(){
+        return character.visibleEnemies().toMap(BaseCharacter::getLocation, BaseCharacter::enemy);
     }
 
     public double getMana() {
@@ -95,13 +104,8 @@ public class EnemyCharacter implements CharacterInterface {
     }
 
     public MutableList<ReadonlyAbility> getAbilities(){
-        return character.getAbilities().collect(ReadonlyAbility::new);
+        return character.getAbilities().collect(Ability::readonly);
     }
-
-    public EnemyTeam getTeam() {
-        return new EnemyTeam(character.getTeam());
-    }
-
 
     public Class<? extends BaseCharacter> characterClass(){
         return character.getClass();

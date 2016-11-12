@@ -8,7 +8,7 @@ import fellowship.events.SliceEvent;
 
 import java.util.function.Consumer;
 
-public class Swipe implements Ability {
+public class Swipe extends Ability {
     @Override
     public void apply(BaseCharacter character) {
         character.on(Events.Slice, Event.forever(new Consumer<Event>(){

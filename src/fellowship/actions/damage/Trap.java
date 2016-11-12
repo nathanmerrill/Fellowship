@@ -1,6 +1,6 @@
 package fellowship.actions.damage;
 
-import com.ppcg.kothcomm.game.maps.gridmaps.Point2D;
+import com.nmerrill.kothcomm.game.maps.Point2D;
 import fellowship.characters.BaseCharacter;
 import fellowship.events.Events;
 import fellowship.actions.LocationAction;
@@ -14,10 +14,10 @@ public class Trap extends LocationAction {
 
     @Override
     public void perform(Point2D location) {
-        character.enemyCharacters().forEach(enemy -> enemy.on(Events.Step, event -> {
+        character.visibleEnemies().forEach(enemy -> enemy.on(Events.Step, event -> {
             StepEvent step = (StepEvent) event;
             if ((step.getLocation().equals(location))){
-                if (character.enemyCharacters().contains(step.getCharacter())){
+                if (character.visibleEnemies().contains(step.getCharacter())){
                     step.getCharacter().damage(20);
                     return false;
                 }

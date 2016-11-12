@@ -7,16 +7,12 @@ import fellowship.events.Events;
 
 import java.util.Random;
 
-public class Evasive implements Ability {
+public class Evasive extends Ability {
 
-    private final Random random;
-    public Evasive(Random random){
-        this.random = random;
-    }
     @Override
     public void apply(BaseCharacter character) {
         character.on(Events.Sliced, Event.forever(i -> {
-            if (random.nextDouble() < .25){
+            if (character.getRandom().nextDouble() < .25){
                 i.cancel();
             }
         }));

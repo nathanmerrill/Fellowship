@@ -1,5 +1,6 @@
 package fellowship.actions.defensive;
 
+
 import fellowship.characters.BaseCharacter;
 import fellowship.actions.Action;
 
@@ -10,7 +11,7 @@ public class Restore extends Action {
     }
     @Override
     public void perform() {
-        character.teamCharacters().forEach(teammate -> teammate.heal(teammate.getMaxHealth()));
+        character.teammates().forEach(teammate -> teammate.heal(teammate.getMaxHealth()));
     }
 
     @Override

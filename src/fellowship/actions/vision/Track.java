@@ -5,7 +5,6 @@ import fellowship.actions.TargettedAction;
 import fellowship.events.DamageEvent;
 import fellowship.events.Event;
 import fellowship.events.Events;
-import org.eclipse.collections.api.set.MutableSet;
 
 public class Track extends TargettedAction {
 
@@ -14,8 +13,8 @@ public class Track extends TargettedAction {
     }
 
     @Override
-    protected MutableSet<BaseCharacter> getAvailableTargets() {
-        return character.enemyCharacters();
+    public boolean canTargetEnemies() {
+        return true;
     }
 
     @Override

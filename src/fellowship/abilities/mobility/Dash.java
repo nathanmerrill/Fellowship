@@ -4,7 +4,7 @@ import fellowship.characters.BaseCharacter;
 import fellowship.abilities.Ability;
 import fellowship.Range;
 
-public class Dash implements Ability {
+public class Dash extends Ability {
     @Override
     public void apply(BaseCharacter character) {
         character.setStepRange(new Range(character.getStepRange().getRange()));

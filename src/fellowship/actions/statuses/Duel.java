@@ -4,17 +4,11 @@ import fellowship.characters.BaseCharacter;
 import fellowship.actions.TargettedAction;
 import fellowship.events.Event;
 import fellowship.events.Events;
-import org.eclipse.collections.api.set.MutableSet;
 
 public class Duel extends TargettedAction {
 
     public Duel(BaseCharacter character){
         super(character);
-    }
-
-    @Override
-    protected MutableSet<BaseCharacter> getAvailableTargets() {
-        return character.enemyCharacters(1);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package fellowship.actions.stats;
 
+
 import fellowship.characters.BaseCharacter;
 import fellowship.actions.Action;
 import fellowship.Stat;

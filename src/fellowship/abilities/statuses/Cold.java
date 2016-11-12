@@ -5,11 +5,11 @@ import fellowship.abilities.Ability;
 import fellowship.events.Event;
 import fellowship.events.Events;
 
-public class Cold implements Ability {
+public class Cold extends Ability {
 
     @Override
     public void apply(BaseCharacter character) {
-        character.enemyCharacters(1).forEach(enemy -> {
+        character.visibleEnemies(1).forEach(enemy -> {
             enemy.slow(10);
             character.on(Events.TurnStart, Event.after(1, e -> enemy.slow(-10)));
         });

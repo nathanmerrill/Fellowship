@@ -1,9 +1,7 @@
-package fellowship.teams;
+package fellowship.characters;
 
 
 import fellowship.Player;
-import fellowship.characters.BaseCharacter;
-import fellowship.characters.CharacterInterface;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.set.MutableSet;
 import org.eclipse.collections.impl.factory.Lists;
@@ -11,7 +9,7 @@ import org.eclipse.collections.impl.factory.Sets;
 
 import java.util.*;
 
-public class Team implements Iterable<BaseCharacter>, TeamInterface {
+public class Team implements Iterable<BaseCharacter> {
     private final MutableSet<BaseCharacter> characters;
     private final Player player;
     private Team enemyTeam;
@@ -23,10 +21,17 @@ public class Team implements Iterable<BaseCharacter>, TeamInterface {
 
     public void addCharacter(BaseCharacter character){
         characters.add(character);
+        updatePlayers();
     }
 
     public void removeCharacter(BaseCharacter character){
-        characters.add(character);
+        characters.remove(character);
+        updatePlayers();
+    }
+
+    private void updatePlayers(){
+        player.setTeam(characters.collect(BaseCharacter::readonly));
+        enemyTeam.getPlayer().setEnemies(characters.collect(BaseCharacter::enemy));
     }
 
     public Player getPlayer(){
@@ -41,7 +46,7 @@ public class Team implements Iterable<BaseCharacter>, TeamInterface {
         this.enemyTeam = enemyTeam;
     }
 
-    public boolean contains(CharacterInterface player){
+    public boolean contains(BaseCharacter player){
         return characters.contains(player);
     }
 

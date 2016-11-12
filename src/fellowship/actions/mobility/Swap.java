@@ -1,9 +1,8 @@
 package fellowship.actions.mobility;
 
-import com.ppcg.kothcomm.game.maps.gridmaps.Point2D;
+import com.nmerrill.kothcomm.game.maps.Point2D;
 import fellowship.characters.BaseCharacter;
 import fellowship.actions.TargettedAction;
-import org.eclipse.collections.api.set.MutableSet;
 
 public class Swap extends TargettedAction {
 
@@ -12,8 +11,8 @@ public class Swap extends TargettedAction {
     }
 
     @Override
-    protected MutableSet<BaseCharacter> getAvailableTargets() {
-        return character.enemyCharacters().withAll(character.teamCharacters());
+    public boolean canTargetTeam() {
+        return true;
     }
 
     @Override

@@ -5,7 +5,7 @@ import fellowship.abilities.Ability;
 import fellowship.events.Event;
 import fellowship.events.Events;
 
-public class Immune implements Ability {
+public class Immune extends Ability {
 
     @Override
     public void apply(BaseCharacter character) {

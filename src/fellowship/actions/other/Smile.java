@@ -1,5 +1,6 @@
 package fellowship.actions.other;
 
+
 import fellowship.characters.BaseCharacter;
 import fellowship.actions.Action;
 
@@ -36,5 +37,10 @@ public class Smile extends Action {
     @Override
     public boolean breaksInvisibility() {
         return false;
+    }
+
+    @Override
+    public boolean isAvailable() {
+        return true;
     }
 }

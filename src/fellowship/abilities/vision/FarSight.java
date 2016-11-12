@@ -4,7 +4,7 @@ import fellowship.characters.BaseCharacter;
 import fellowship.abilities.Ability;
 import fellowship.Range;
 
-public class FarSight implements Ability {
+public class FarSight extends Ability {
 
     @Override
     public void apply(BaseCharacter character) {

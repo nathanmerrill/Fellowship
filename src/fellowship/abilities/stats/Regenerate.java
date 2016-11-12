@@ -6,7 +6,7 @@ import fellowship.Stat;
 import fellowship.events.Event;
 import fellowship.events.Events;
 
-public class Regenerate implements Ability {
+public class Regenerate extends Ability {
 
     @Override
     public void apply(BaseCharacter character) {

@@ -1,5 +1,6 @@
 package fellowship.actions.damage;
 
+
 import fellowship.characters.BaseCharacter;
 import fellowship.actions.Action;
 
@@ -11,7 +12,7 @@ public class ChainLightning extends Action {
 
     @Override
     public void perform() {
-        character.enemyCharacters()
+        character.visibleEnemies()
                 .forEach(enemy -> enemy.damage(character, 15));
     }
 
