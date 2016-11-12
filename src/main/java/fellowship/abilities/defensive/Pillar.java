@@ -1,0 +1,14 @@
+package fellowship.abilities.defensive;
+
+import fellowship.characters.BaseCharacter;
+import fellowship.abilities.Ability;
+import com.nmerrill.kothcomm.utils.Event;
+import fellowship.events.Events;
+
+public class Pillar extends Ability {
+    @Override
+    public void apply(BaseCharacter character) {
+        Ability.addCooldown(1, character, Events.Sliced, Event::cancel);
+    }
+
+}
