@@ -103,7 +103,7 @@ public class BaseCharacter implements MapObject {
 
     public void start(){
         primary = Stat.values()[stats.indexOf(stats.max())];
-        actionQueue.enqueue(this::action, 0);
+        actionQueue.enqueue(this::action, delay);
     }
 
     public void setSmartness(int smartness){

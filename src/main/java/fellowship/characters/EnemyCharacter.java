@@ -1,12 +1,11 @@
 package fellowship.characters;
 
-import com.nmerrill.kothcomm.game.maps.Point2D;
-import fellowship.*;
+import fellowship.Range;
+import fellowship.Stat;
 import fellowship.abilities.Ability;
 import fellowship.abilities.ReadonlyAbility;
 import fellowship.actions.ReadonlyAction;
 import org.eclipse.collections.api.list.MutableList;
-import org.eclipse.collections.api.map.MutableMap;
 
 public final class EnemyCharacter {
     private final BaseCharacter character;
@@ -73,18 +72,6 @@ public final class EnemyCharacter {
 
     public Range getSliceRange() {
         return character.getSliceRange();
-    }
-
-    public MutableMap<Point2D, EnemyCharacter> visibleEnemies(Range range){
-        return character.visibleEnemies(range).toMap(BaseCharacter::getLocation, BaseCharacter::enemy);
-    }
-
-    public MutableMap<Point2D, EnemyCharacter> visibleEnemies(int range){
-        return character.visibleEnemies(range).toMap(BaseCharacter::getLocation, BaseCharacter::enemy);
-    }
-
-    public MutableMap<Point2D, EnemyCharacter> visibleEnemies(){
-        return character.visibleEnemies().toMap(BaseCharacter::getLocation, BaseCharacter::enemy);
     }
 
     public double getMana() {

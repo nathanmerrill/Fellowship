@@ -50,9 +50,10 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         Arguments arguments = Arguments.parse(args);
-        LanguageLoader<Player> loader = new LanguageLoader<>(new JavaLoader<>(Player.class), arguments);
+        LanguageLoader<Player> loader = new LanguageLoader<>(arguments);
+        loader.addLoader(new JavaLoader<>(Player.class));
 
-        if (arguments.shouldDownload) {
+        if (arguments.questionID > 0) {
             new Downloader(loader, arguments.questionID).downloadQuestions();
         }
         LocalJavaLoader<Player> localLoader = new LocalJavaLoader<>();

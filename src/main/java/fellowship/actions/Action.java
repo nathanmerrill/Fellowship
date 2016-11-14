@@ -43,6 +43,10 @@ public abstract class Action {
 
     public abstract int getCooldown();
 
+    public final int getRemainingCooldown(){
+        return cooldown;
+    }
+
     public boolean isAvailable() {
         if (character.isStunned()){
             return false;

@@ -22,6 +22,10 @@ public final class ReadonlyAction {
         return action.getCooldown();
     }
 
+    public int getRemainingCooldown(){
+        return action.getRemainingCooldown();
+    }
+
     public boolean isAvailable() {
         return action.isAvailable();
     }

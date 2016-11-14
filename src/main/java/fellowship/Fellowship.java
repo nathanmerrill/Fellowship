@@ -5,8 +5,8 @@ import com.nmerrill.kothcomm.game.games.MaxActionQueueGame;
 import com.nmerrill.kothcomm.game.maps.Point2D;
 import com.nmerrill.kothcomm.game.maps.graphmaps.AdjacencyGraphMap;
 import com.nmerrill.kothcomm.game.maps.graphmaps.GraphMap;
-import com.nmerrill.kothcomm.game.maps.graphmaps.adjacencies.MooreAdjacencySet;
 import com.nmerrill.kothcomm.game.maps.graphmaps.bounds.point2D.SquareBounds;
+import com.nmerrill.kothcomm.game.maps.graphmaps.neighborhoods.MooreNeighborhood;
 import com.nmerrill.kothcomm.game.scoring.Scoreboard;
 import fellowship.characters.BaseCharacter;
 import fellowship.characters.CharacterTemplate;
@@ -19,8 +19,8 @@ import java.util.List;
 
 
 public class Fellowship extends MaxActionQueueGame<Player> {
-    public static final int CHARACTERS_PER_TEAM = 4;
-    public static final int MAP_SIZE = 5;
+    public static final int CHARACTERS_PER_TEAM = 3;
+    public static final int MAP_SIZE = 10;
     public static final int MAX_STEPS = 10000;
 
     private MutableMap<Player, Team> teams;
@@ -37,12 +37,10 @@ public class Fellowship extends MaxActionQueueGame<Player> {
     @Override
     public void setup() {
         teams = players.toMap(i -> i, Team::new);
-        map = new AdjacencyGraphMap<>(new SquareBounds(MAP_SIZE), new MooreAdjacencySet());
+        map = new AdjacencyGraphMap<>(new SquareBounds(MAP_SIZE), new MooreNeighborhood());
 
         MutableList<Team> teamList = teams.valuesView().toList();
-        teamList.zip(teamList.asReversed()).forEach(pair -> {
-            pair.getOne().setEnemyTeam(pair.getTwo());
-        });
+        teamList.zip(teamList.asReversed()).forEach(pair -> pair.getOne().setEnemyTeam(pair.getTwo()));
         MutableMap<Player, MutableList<CharacterTemplate>> templates =
                 players.toMap(i -> i, i -> Lists.mutable.ofAll(i.createCharacters()));
         templates.forEachKeyValue((player, templateList) -> {

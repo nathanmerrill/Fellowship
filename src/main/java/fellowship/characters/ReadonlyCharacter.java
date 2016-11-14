@@ -7,7 +7,6 @@ import fellowship.abilities.Ability;
 import fellowship.abilities.ReadonlyAbility;
 import fellowship.actions.ReadonlyAction;
 import org.eclipse.collections.api.list.MutableList;
-import org.eclipse.collections.api.map.MutableMap;
 
 public final class  ReadonlyCharacter {
     private final BaseCharacter character;
@@ -61,18 +60,6 @@ public final class  ReadonlyCharacter {
 
     public boolean isDead(){
         return character.isDead();
-    }
-
-    public MutableMap<Point2D, EnemyCharacter> visibleEnemies(Range range){
-        return character.visibleEnemies(range).toMap(BaseCharacter::getLocation, BaseCharacter::enemy);
-    }
-
-    public MutableMap<Point2D, EnemyCharacter> visibleEnemies(int range){
-        return character.visibleEnemies(range).toMap(BaseCharacter::getLocation, BaseCharacter::enemy);
-    }
-
-    public MutableMap<Point2D, EnemyCharacter> visibleEnemies(){
-        return character.visibleEnemies().toMap(BaseCharacter::getLocation, BaseCharacter::enemy);
     }
 
     public Stat primaryStat(){
