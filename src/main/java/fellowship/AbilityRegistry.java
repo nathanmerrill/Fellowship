@@ -59,7 +59,7 @@ public class AbilityRegistry {
     private static ImmutableSet<Class<? extends Action>> availableActions = Sets.immutable.of(
             Quick.class,
             Weave.class,
-            ChainLightning.class,
+            Lightning.class,
             Drain.class,
             KO.class,
             Trap.class,

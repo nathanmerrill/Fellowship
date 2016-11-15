@@ -20,7 +20,7 @@ public class TemplatePlayer extends Player{
     @Override
     public List<CharacterTemplate> createCharacters() {
         List<CharacterTemplate> templates = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 3; i++) {
             templates.add(new CharacterTemplate(10, 5, 5,
                     new Ranged(),
                     new Flexible(),
