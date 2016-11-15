@@ -4,9 +4,9 @@ package fellowship.actions.damage;
 import fellowship.characters.BaseCharacter;
 import fellowship.actions.Action;
 
-public class ChainLightning extends Action {
+public class Lightning extends Action {
 
-    public ChainLightning(BaseCharacter character){
+    public Lightning(BaseCharacter character){
         super(character);
     }
 
