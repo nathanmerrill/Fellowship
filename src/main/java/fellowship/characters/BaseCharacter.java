@@ -202,6 +202,9 @@ public class BaseCharacter implements MapObject {
 
     public void heal(double amount){
         health += amount;
+        if (health > maxHealth){
+            health = maxHealth;
+        }
     }
 
     public void invisible(int duration){
