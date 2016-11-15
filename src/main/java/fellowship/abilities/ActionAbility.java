@@ -1,6 +1,7 @@
 package fellowship.abilities;
 
 import fellowship.actions.Action;
+import fellowship.actions.other.Clone;
 import fellowship.characters.BaseCharacter;
 import org.eclipse.collections.api.block.function.Function;
 
@@ -30,6 +31,9 @@ public class ActionAbility extends Ability {
 
     @Override
     public int getNumSlots() {
+        if (sampleInstance() instanceof Clone) {
+            return 2;
+        }
         return 1;
     }
 
