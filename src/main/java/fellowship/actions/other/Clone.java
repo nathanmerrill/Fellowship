@@ -14,7 +14,7 @@ public class Clone extends LocationAction {
     public void perform(Point2D location) {
         BaseCharacter clone = new BaseCharacter(character.getActionQueue(), character.getMap(), character.getTeam(), character.getRandom());
         for (Stat stat: Stat.values()){
-            character.addStat(stat, character.getStat(stat));
+            clone.addStat(stat, character.getStat(stat));
         }
         character.getAbilities().forEach(clone::addAbility);
         clone.removeMana(character.getMaxMana()-character.getMana());
