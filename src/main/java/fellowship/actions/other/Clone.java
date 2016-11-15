@@ -27,11 +27,11 @@ public class Clone extends LocationAction {
 
     @Override
     public int getCooldown() {
-        return 10;
+        return 100;
     }
 
     @Override
     public int getManaCost() {
-        return 8;
+        return 100;
     }
 }

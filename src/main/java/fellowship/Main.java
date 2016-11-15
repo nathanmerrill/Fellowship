@@ -53,7 +53,7 @@ public class Main extends Application {
         LanguageLoader<Player> loader = new LanguageLoader<>(arguments);
         loader.addLoader(new JavaLoader<>(Player.class));
 
-        if (arguments.questionID > 0) {
+        if (arguments.validQuestionID()) {
             new Downloader(loader, arguments.questionID).downloadQuestions();
         }
         LocalJavaLoader<Player> localLoader = new LocalJavaLoader<>();
