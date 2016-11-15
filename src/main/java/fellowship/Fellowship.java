@@ -82,7 +82,7 @@ public class Fellowship extends MaxActionQueueGame<Player> {
     }
 
     @Override
-    protected boolean isFinished() {
-        return teams.collect(Team::getCharacters).anySatisfy(List::isEmpty);
+    public boolean finished() {
+        return super.finished() || teams.collect(Team::getCharacters).anySatisfy(List::isEmpty);
     }
 }
