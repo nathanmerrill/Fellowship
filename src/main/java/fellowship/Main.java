@@ -57,9 +57,10 @@ public class Main extends Application {
             new Downloader(loader, arguments.questionID).downloadQuestions();
         }
         LocalJavaLoader<Player> localLoader = new LocalJavaLoader<>();
-        // Add your player here if you want to test it locally, and uncomment the next line
-        //localLoader.register("Sample", TemplatePlayer::new);
-        //loader.addLoader(localLoader);
+//         Add your player here if you want to test it locally, and uncomment the next line
+//        localLoader.register("Sample", TemplatePlayer::new);
+//        localLoader.register("Your player", YourPlayer::new);
+        loader.addLoader(localLoader);
         GameManager<Player> manager = new GameManager<>(Fellowship::new, arguments.getRandom())
                 .playerCount(2).allowDuplicates();
         manager.register(loader.load());
@@ -68,6 +69,7 @@ public class Main extends Application {
             launch(Main.class);
         } else {
             new FixedCountRunner<>(runner).run(arguments.iterations, System.out);
+            System.exit(0);
         }
     }
 }
