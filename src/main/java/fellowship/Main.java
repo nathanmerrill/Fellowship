@@ -62,7 +62,7 @@ public class Main extends Application {
 //        localLoader.register("Your player", YourPlayer::new);
         loader.addLoader(localLoader);
         GameManager<Player> manager = new GameManager<>(Fellowship::new, arguments.getRandom())
-                .playerCount(2).allowDuplicates();
+                .playerCount(2);
         manager.register(loader.load());
         runner = new TournamentRunner<>(new RoundRobin<>(manager), new MamAggregator<>());
         if (arguments.useGui) {
