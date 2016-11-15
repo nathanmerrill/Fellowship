@@ -72,7 +72,6 @@ public class BaseCharacter implements MapObject {
         this.team = team;
         this.random = random;
         cached = Maps.mutable.empty();
-        team.addCharacter(this);
         this.sightRange = new Range(2);
         this.sliceRange = new Range(1, true);
         this.stepRange = new Range(1, true);
@@ -91,6 +90,7 @@ public class BaseCharacter implements MapObject {
         this.invisibleTurn = -1;
         this.readonly = new ReadonlyCharacter(this);
         this.enemy = new EnemyCharacter(this);
+        team.addCharacter(this);
     }
 
     public Random getRandom() {
