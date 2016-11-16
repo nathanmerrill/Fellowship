@@ -78,6 +78,7 @@ public class Fellowship extends MaxActionQueueGame<Player> {
     public Scoreboard<Player> getScores() {
         Scoreboard<Player> scores = new Scoreboard<>();
         teams.toMap(Team::getPlayer, t -> t.getCharacters().size()).forEach(scores::addScore);
+        scores.setDescending();
         return scores;
     }
 
