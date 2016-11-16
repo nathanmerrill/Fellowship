@@ -8,7 +8,7 @@ import fellowship.events.SliceEvent;
 public class Reflexive extends Ability {
     @Override
     public void apply(BaseCharacter character) {
-        Ability.addCooldown(3, character, Events.Death, event -> {
+        Ability.addCooldown(3, character, Events.Slice, event -> {
             character.slice(((SliceEvent)event).getSlicer());
         });
     }
