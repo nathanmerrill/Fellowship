@@ -40,4 +40,9 @@ public class Step extends LocationAction {
     public boolean movementAction() {
         return true;
     }
+
+    @Override
+    public boolean breaksInvisibility() {
+        return false;
+    }
 }
