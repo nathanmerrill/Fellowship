@@ -100,7 +100,7 @@ public final class CharacterTemplate {
     }
 
     public CharacterTemplate addStat(Stat stat, int amount){
-        if (amount > 0 && amount <= remainingPoints){
+        if (amount >= 0 && amount <= remainingPoints){
             attributes.set(stat.ordinal(), attributes.get(stat.ordinal())+amount);
             remainingPoints -= amount;
         } else {
