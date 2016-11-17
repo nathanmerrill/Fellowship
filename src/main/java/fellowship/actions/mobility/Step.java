@@ -18,7 +18,7 @@ public class Step extends LocationAction {
 
     @Override
     public void perform(Point2D point) {
-        character.setLocation(getLocation());
+        character.step(getLocation());
     }
 
     @Override
