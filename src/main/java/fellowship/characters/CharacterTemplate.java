@@ -100,11 +100,11 @@ public final class CharacterTemplate {
     }
 
     public CharacterTemplate addStat(Stat stat, int amount){
-        if (amount > 0 && amount <= remainingPoints){
+        if (amount >= 0 && amount <= remainingPoints){
             attributes.set(stat.ordinal(), attributes.get(stat.ordinal())+amount);
             remainingPoints -= amount;
         } else {
-            if (amount <= 0){
+            if (amount < 0){
                 throw new RuntimeException("Must add positive amount");
             } else {
                 throw new RuntimeException("Insufficient stat points");
