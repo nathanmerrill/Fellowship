@@ -1,18 +1,25 @@
 package fellowship.actions.attacking;
 
 
+import fellowship.Range;
+import fellowship.actions.TargettedAction;
 import fellowship.characters.BaseCharacter;
-import fellowship.actions.Action;
 
-public class Quick extends Action {
+public class Quick extends TargettedAction {
 
     public Quick(BaseCharacter character){
         super(character);
     }
+
     @Override
-    public void perform() {
-        character.slice();
-        character.slice();
+    public Range getRange() {
+        return character.getSliceRange();
+    }
+
+    @Override
+    public void perform(BaseCharacter target) {
+        character.slice(target);
+        character.slice(target);
     }
 
     @Override

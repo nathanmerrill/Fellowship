@@ -249,13 +249,6 @@ public class BaseCharacter implements MapObject {
         return delay;
     }
 
-    public void step(){
-        if (isFrozen()){
-            return;
-        }
-        step.perform();
-    }
-
     public void step(Point2D location){
         if (isFrozen()){
             return;
@@ -302,10 +295,6 @@ public class BaseCharacter implements MapObject {
 
     public void freeze(int turns){
         frozenTurn = turn + turns;
-    }
-
-    public void slice(){
-        slice.perform();
     }
 
     public void slice(BaseCharacter character){
