@@ -8,7 +8,7 @@ public class FarSight extends Ability {
 
     @Override
     public void apply(BaseCharacter character) {
-        character.setSightRange(new Range(character.getSightRange().getRange()));
+        character.setSightRange(new Range(character.getSightRange().getRange()+2));
     }
 
     @Override

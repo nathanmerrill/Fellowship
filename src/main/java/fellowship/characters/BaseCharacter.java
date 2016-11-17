@@ -208,7 +208,7 @@ public class BaseCharacter implements MapObject {
     }
 
     public void invisible(int duration){
-        invisibleTurn = Math.max(actionQueue.getTime() + duration, invisibleTurn);
+        invisibleTurn = Math.max(turn + duration, invisibleTurn);
     }
 
     public void reveal(){
@@ -226,6 +226,8 @@ public class BaseCharacter implements MapObject {
         if (event.isCanceled()){
             return delay;
         }
+        heal(HEALTH_REGEN_PER_STR*getStat(Stat.STR));
+        addMana(MANA_REGEN_PER_INT*getStat(Stat.INT));
         if (isPoisoned()){
             damage(getPoisonAmount());
         }
