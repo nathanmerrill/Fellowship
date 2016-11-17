@@ -429,7 +429,7 @@ public class BaseCharacter implements MapObject {
     }
 
     public void addMana(double amount){
-        this.mana = Math.max(this.mana + amount, maxMana);
+        this.mana = Math.min(this.mana + amount, maxMana);
     }
 
     public int getMaxMana(){
