@@ -56,8 +56,8 @@ public class Fellowship extends MaxActionQueueGame<Player> {
                         teams.get(player),
                         random
                 );
-                template.currentAbilities().forEach(character::addAbility);
                 template.currentAttributes().forEach(character::addStat);
+                template.currentAbilities().forEach(character::addAbility);
                 character.start();
             });
         });
