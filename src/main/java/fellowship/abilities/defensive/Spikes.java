@@ -12,6 +12,9 @@ public class Spikes extends Ability {
     public void apply(BaseCharacter character) {
         character.on(Events.Damaged, Event.forever(i -> {
             DamageEvent event = (DamageEvent)i;
+            if (event.getAmount() < .5){
+                return;
+            }
             event.getDamager().damage(character, event.getAmount()/2);
         }));
     }
