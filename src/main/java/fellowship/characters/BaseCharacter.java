@@ -228,7 +228,7 @@ public class BaseCharacter implements MapObject {
         Player player = team.getPlayer();
         TurnStartEvent event = new TurnStartEvent();
         eventManager.addEvent(event, Events.TurnStart);
-        if (event.isCanceled()){
+        if (event.isCancelled()){
             return delay;
         }
         heal(HEALTH_REGEN_PER_STR*getStat(Stat.STR));
@@ -262,7 +262,7 @@ public class BaseCharacter implements MapObject {
         }
         StepEvent event = new StepEvent(this, location);
         eventManager.addEvent(event, Events.Step);
-        if (event.isCanceled()){
+        if (event.isCancelled()){
             return;
         }
         setLocation(location);
@@ -385,7 +385,7 @@ public class BaseCharacter implements MapObject {
         }
         DeathEvent event = new DeathEvent();
         eventManager.addEvent(event, Events.Death);
-        if (event.isCanceled()){
+        if (event.isCancelled()){
             return;
         }
         this.dead = true;

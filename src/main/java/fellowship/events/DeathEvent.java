@@ -4,8 +4,4 @@ import com.nmerrill.kothcomm.utils.Event;
 
 public class DeathEvent extends Event {
 
-    @Override
-    public void cancel() {
-
-    }
 }
