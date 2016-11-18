@@ -60,7 +60,7 @@ public class Main extends Application {
 //         Add your player here if you want to test it locally, and uncomment the next line
 //        localLoader.register("Sample", TemplatePlayer::new);
 //        localLoader.register("Your player", YourPlayer::new);
-        loader.addLoader(localLoader);
+//        loader.addLoader(localLoader);
         GameManager<Player> manager = new GameManager<>(Fellowship::new, arguments.getRandom())
                 .playerCount(2);
         manager.register(loader.load());
