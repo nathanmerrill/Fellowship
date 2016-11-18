@@ -23,11 +23,6 @@ public class Quick extends TargettedAction {
     }
 
     @Override
-    public String toString() {
-        return "Double Slap";
-    }
-
-    @Override
     public int getCooldown() {
         return 0;
     }

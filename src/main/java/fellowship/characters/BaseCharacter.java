@@ -380,6 +380,9 @@ public class BaseCharacter implements MapObject {
     }
 
     public void die(){
+        if (dead){
+            return;
+        }
         DeathEvent event = new DeathEvent();
         eventManager.addEvent(event, Events.Death);
         if (event.isCanceled()){
