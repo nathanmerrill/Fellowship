@@ -18,4 +18,23 @@ public class Range {
     public int getRange() {
         return range;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Range range1 = (Range) o;
+
+        if (isCardinal != range1.isCardinal) return false;
+        return range == range1.range;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (isCardinal ? 1 : 0);
+        result = 31 * result + range;
+        return result;
+    }
 }

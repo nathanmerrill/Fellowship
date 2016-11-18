@@ -21,15 +21,22 @@ import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.list.primitive.MutableIntList;
 import org.eclipse.collections.api.map.MutableMap;
 import org.eclipse.collections.api.set.MutableSet;
+import org.eclipse.collections.api.tuple.Pair;
 import org.eclipse.collections.impl.factory.Lists;
 import org.eclipse.collections.impl.factory.Maps;
 import org.eclipse.collections.impl.factory.Sets;
 import org.eclipse.collections.impl.factory.primitive.IntLists;
+import org.eclipse.collections.impl.tuple.Tuples;
 
 import java.util.Random;
 import java.util.function.Function;
 
 public class BaseCharacter implements MapObject {
+
+    /**
+     * We can use a static cache, because the map size never changes
+     */
+    private final static MutableMap<Pair<Point2D, Range>, Cache<MutableSet<Point2D>>> cached = Maps.mutable.empty();
 
     public final static double MANA_REGEN_PER_INT = .1;
     public final static double HEALTH_REGEN_PER_STR = .5;
@@ -46,7 +53,6 @@ public class BaseCharacter implements MapObject {
     private final MutableList<Action> actions;
     private final Action slice, step, smile;
     private final MutableIntList stats;
-    private final MutableMap<Range, Cache<MutableSet<Point2D>>> cached;
     private Stat primary;
     private int smartness, cleverness;
     private double health, mana;
@@ -71,7 +77,6 @@ public class BaseCharacter implements MapObject {
         this.map = map;
         this.team = team;
         this.random = random;
-        cached = Maps.mutable.empty();
         this.sightRange = new Range(2);
         this.sliceRange = new Range(1, true);
         this.stepRange = new Range(1, true);
@@ -311,7 +316,7 @@ public class BaseCharacter implements MapObject {
     }
 
     public MutableSet<Point2D> rangeAround(Range range){
-        return cached.getIfAbsentPut(range, Cache::new).get(() -> {
+        return cached.getIfAbsentPut(Tuples.pair(currentLocation, range), Cache::new).get(() -> {
             MutableSet<Point2D> points = Sets.mutable.empty();
             points.add(currentLocation);
             GraphMap<Point2D, MapObject> map = getMap();
@@ -330,7 +335,8 @@ public class BaseCharacter implements MapObject {
     }
 
     public MutableSet<BaseCharacter> teammates(Range range){
-        return characters(range).intersect(teammates());
+        MutableSet<Point2D> points = rangeAround(range);
+        return teammates().select(t -> points.contains(t.currentLocation));
     }
 
     public MutableSet<BaseCharacter> teammates(int range){
@@ -346,21 +352,18 @@ public class BaseCharacter implements MapObject {
     }
 
     public MutableSet<BaseCharacter> visibleEnemies(Range range){
-        return characters(range)
-                .reject(team::contains)
-                .reject(BaseCharacter::isInvisible)
-                .select(p -> team.getCharacters().anySatisfy(c -> c.characters(c.getSightRange()).contains(p)));
+        MutableSet<BaseCharacter> enemies = team.getEnemyTeam().getCharacters().toSet();
+        MutableSet<Point2D> teamVision = teamVision();
+        enemies.reject(BaseCharacter::isInvisible).select(teamVision::contains);
+        return enemies;
+    }
+
+    private MutableSet<Point2D> teamVision(){
+        return team.getCharacters().flatCollect(c -> rangeAround(c.getSightRange()), Sets.mutable.empty());
     }
 
     public MutableSet<BaseCharacter> visibleEnemies(){
         return visibleEnemies(1000);
-    }
-
-    public MutableSet<BaseCharacter> characters(Range range){
-        return rangeAround(range)
-                .select(map::isFilled)
-                .collect(map::get)
-                .collectIf(i -> i instanceof BaseCharacter, i -> (BaseCharacter) i);
     }
 
     public void damage(BaseCharacter source, double amount){
@@ -390,7 +393,6 @@ public class BaseCharacter implements MapObject {
 
     public void setLocation(Point2D location){
         if (map.inBounds(location) && getMap().isEmpty(location)) {
-            cached.clear();
             if (currentLocation == null){
                 map.put(location, this);
             } else {
