@@ -19,8 +19,8 @@ public class Clone extends LocationAction {
         character.getAbilities().forEach(clone::addAbility);
         clone.removeMana(character.getMaxMana()-character.getMana());
         clone.damage(character.getMaxHealth()-character.getHealth());
+        clone.setLocation(location);
         character.getTeam().addCharacter(clone);
-        character.setLocation(location);
         character.start();
 
     }
