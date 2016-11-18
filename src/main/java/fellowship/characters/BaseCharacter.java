@@ -363,7 +363,7 @@ public class BaseCharacter implements MapObject {
     }
 
     private MutableSet<Point2D> teamVision(){
-        return team.getCharacters().flatCollect(c -> rangeAround(c.getSightRange()), Sets.mutable.empty());
+        return team.getCharacters().flatCollect(c -> c.rangeAround(c.getSightRange()), Sets.mutable.empty());
     }
 
     public MutableSet<BaseCharacter> visibleEnemies(){
