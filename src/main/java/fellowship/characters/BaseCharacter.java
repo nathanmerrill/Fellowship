@@ -354,7 +354,10 @@ public class BaseCharacter implements MapObject {
     public MutableSet<BaseCharacter> visibleEnemies(Range range){
         MutableSet<BaseCharacter> enemies = team.getEnemyTeam().getCharacters().toSet();
         MutableSet<Point2D> teamVision = teamVision();
-        enemies.reject(BaseCharacter::isInvisible).select(teamVision::contains);
+        MutableSet<Point2D> withinRange = rangeAround(range);
+        enemies.reject(BaseCharacter::isInvisible)
+                .select(teamVision::contains)
+                .select(withinRange::contains);
         return enemies;
     }
 
