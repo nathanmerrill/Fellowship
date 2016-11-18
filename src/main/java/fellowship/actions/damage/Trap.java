@@ -18,7 +18,7 @@ public class Trap extends LocationAction {
             StepEvent step = (StepEvent) event;
             if ((step.getLocation().equals(location))){
                 if (character.visibleEnemies().contains(step.getCharacter())){
-                    step.getCharacter().damage(20);
+                    step.getCharacter().damage(15);
                     return false;
                 }
             }
