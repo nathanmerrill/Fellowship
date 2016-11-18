@@ -29,7 +29,7 @@ public abstract class Action {
         this.character.removeMana(manaCost);
         perform();
         if (cooldown > 0) {
-            character.on(Events.TurnStart, event -> (--cooldown) == 0);
+            character.on(Events.TurnStart, event -> (--cooldown) > 0);
         }
     }
 
