@@ -6,6 +6,7 @@ import com.nmerrill.kothcomm.communication.LanguageLoader;
 import com.nmerrill.kothcomm.communication.languages.java.JavaLoader;
 import com.nmerrill.kothcomm.communication.languages.local.LocalJavaLoader;
 import com.nmerrill.kothcomm.game.GameManager;
+import com.nmerrill.kothcomm.game.PlayerType;
 import com.nmerrill.kothcomm.game.runners.FixedCountRunner;
 import com.nmerrill.kothcomm.game.runners.TournamentRunner;
 import com.nmerrill.kothcomm.game.scoring.MamAggregator;
@@ -18,6 +19,9 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import org.eclipse.collections.api.list.MutableList;
+import org.eclipse.collections.api.tuple.primitive.ObjectDoublePair;
+import org.eclipse.collections.impl.tuple.Tuples;
 
 public class Main extends Application {
     private static TournamentRunner<Player> runner;
@@ -69,6 +73,14 @@ public class Main extends Application {
             launch(Main.class);
         } else {
             new FixedCountRunner<>(runner).run(arguments.iterations, System.out);
+
+            runner.getScoreList().collect(scoreboard -> {
+                MutableList<PlayerType<Player>> scores =  scoreboard.scoresOrdered().collect(ObjectDoublePair::getOne);
+                return Tuples.twin(scores.get(0), scores.get(1));
+            }).toSortedBag().forEachWithOccurrences((pair, count) ->
+                    System.out.println(pair.getOne().getName()+"\t"+pair.getTwo().getName()+":\t"+count)
+            );
+
             System.exit(0);
         }
     }

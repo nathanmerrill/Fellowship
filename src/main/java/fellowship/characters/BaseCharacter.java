@@ -258,6 +258,9 @@ public class BaseCharacter implements MapObject {
         if (!action.basicAction()){
             lastAction = action;
         }
+        if (isDead()){
+            return -1;
+        }
         return delay;
     }
 
