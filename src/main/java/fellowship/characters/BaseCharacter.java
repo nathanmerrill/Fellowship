@@ -39,7 +39,7 @@ public class BaseCharacter implements MapObject {
      */
     private final static MutableMap<Pair<Point2D, Range>, Cache<MutableSet<Point2D>>> cached = Maps.mutable.empty();
 
-    public final static double MANA_REGEN_PER_INT = .2;
+    public final static double MANA_REGEN_PER_INT = .1;
     public final static double HEALTH_REGEN_PER_STR = .5;
     public final static int MANA_PER_INT = 7;
     public final static int HEALTH_PER_STR = 10;
