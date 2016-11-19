@@ -2,6 +2,7 @@ package fellowship.characters;
 
 import com.nmerrill.kothcomm.game.maps.Point2D;
 import com.nmerrill.kothcomm.game.maps.graphmaps.GraphMap;
+import com.nmerrill.kothcomm.game.maps.graphmaps.neighborhoods.VonNeumannNeighborhood;
 import com.nmerrill.kothcomm.utils.ActionQueue;
 import com.nmerrill.kothcomm.utils.Cache;
 import com.nmerrill.kothcomm.utils.Event;
@@ -25,8 +26,11 @@ import org.eclipse.collections.impl.factory.Sets;
 import org.eclipse.collections.impl.factory.primitive.IntLists;
 import org.eclipse.collections.impl.tuple.Tuples;
 
+import java.util.Collection;
 import java.util.Random;
 import java.util.function.Function;
+
+import static com.nmerrill.kothcomm.game.maps.graphmaps.GraphMap.getNeighbors;
 
 public class BaseCharacter implements MapObject {
 
@@ -333,7 +337,20 @@ public class BaseCharacter implements MapObject {
                     points.add(currentLocation.moveY(-i));
                 }
             } else {
-                points.addAll(map.getNeighbors(currentLocation, range.getRange()));
+                VonNeumannNeighborhood neighborhood = new VonNeumannNeighborhood();
+                points.addAll(getNeighbors(currentLocation, range.getRange(),
+                        new org.eclipse.collections.api.block.function.Function<Point2D, Collection<Point2D>>() {
+                    private boolean firstStep = true;
+                    @Override
+                    public Collection<Point2D> valueOf(Point2D each) {
+                        if (firstStep){
+                            firstStep = false;
+                            return getMap().getNeighbors(each);
+                        } else {
+                            return neighborhood.getAdjacencies(each).select(getMap()::inBounds);
+                        }
+                    }
+                }));
             }
             return points.select(map::inBounds);
         });
