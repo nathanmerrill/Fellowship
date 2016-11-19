@@ -6,10 +6,7 @@ import com.nmerrill.kothcomm.utils.ActionQueue;
 import com.nmerrill.kothcomm.utils.Cache;
 import com.nmerrill.kothcomm.utils.Event;
 import com.nmerrill.kothcomm.utils.EventManager;
-import fellowship.MapObject;
-import fellowship.Player;
-import fellowship.Range;
-import fellowship.Stat;
+import fellowship.*;
 import fellowship.abilities.Ability;
 import fellowship.actions.Action;
 import fellowship.actions.ReadonlyAction;
@@ -38,7 +35,7 @@ public class BaseCharacter implements MapObject {
      */
     private final static MutableMap<Pair<Point2D, Range>, Cache<MutableSet<Point2D>>> cached = Maps.mutable.empty();
 
-    public final static double MANA_REGEN_PER_INT = .1;
+    public final static double MANA_REGEN_PER_INT = .2;
     public final static double HEALTH_REGEN_PER_STR = .5;
     public final static int MANA_PER_INT = 7;
     public final static int HEALTH_PER_STR = 10;
@@ -235,6 +232,9 @@ public class BaseCharacter implements MapObject {
         addMana(MANA_REGEN_PER_INT*getStat(Stat.INT));
         if (isPoisoned()){
             damage(getPoisonAmount());
+            if (isDead()){
+                return -1;
+            }
         }
 
         MutableSet<Action> actions = this.actions.select(Action::isAvailable).tap(Action::clearSelection).toSet();
@@ -264,6 +264,11 @@ public class BaseCharacter implements MapObject {
         eventManager.addEvent(event, Events.Step);
         if (event.isCancelled()){
             return;
+        }
+        GraphMap<Point2D, MapObject> map = getMap();
+        if (map.contains(location)){
+            ((TrapStack)map.get(location)).onStep(this);
+            map.clear(location);
         }
         setLocation(location);
     }

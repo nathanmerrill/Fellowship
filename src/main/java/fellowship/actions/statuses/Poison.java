@@ -21,6 +21,6 @@ public class Poison extends TargettedAction {
 
     @Override
     public int getManaCost() {
-        return 2;
+        return 5;
     }
 }

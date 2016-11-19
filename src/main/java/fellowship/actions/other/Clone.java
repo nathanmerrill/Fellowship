@@ -21,7 +21,7 @@ public class Clone extends LocationAction {
         clone.damage(character.getMaxHealth()-character.getHealth());
         clone.setLocation(location);
         character.getTeam().addCharacter(clone);
-        character.start();
+        clone.start();
 
     }
 

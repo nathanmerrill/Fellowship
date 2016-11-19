@@ -7,6 +7,6 @@ import fellowship.Range;
 public class Flexible extends Ability {
     @Override
     public void apply(BaseCharacter character) {
-        character.setStepRange(new Range(character.getSliceRange().getRange()));
+        character.setStepRange(new Range(character.getStepRange().getRange()));
     }
 }
