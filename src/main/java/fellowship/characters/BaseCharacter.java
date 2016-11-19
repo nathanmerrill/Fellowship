@@ -246,7 +246,8 @@ public class BaseCharacter implements MapObject {
         player.setVisibleEnemies(visibleEnemies().toMap(BaseCharacter::getLocation, BaseCharacter::enemy));
         ReadonlyAction choice = player.choose(readonlyActions.keysView().toSet(), readonly);
         if (!readonlyActions.containsKey(choice)){
-            throw new RuntimeException("Invalid action");
+            System.out.println(player.getName()+" returned "+(choice==null?"a null":"an invalid")+" action.  Performing Smile");
+            choice = smile.readonly();
         }
         Action action = readonlyActions.get(choice);
 
