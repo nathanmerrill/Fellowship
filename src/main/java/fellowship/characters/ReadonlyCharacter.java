@@ -7,6 +7,7 @@ import fellowship.abilities.Ability;
 import fellowship.abilities.ReadonlyAbility;
 import fellowship.actions.ReadonlyAction;
 import org.eclipse.collections.api.list.MutableList;
+import org.eclipse.collections.api.set.MutableSet;
 
 public final class  ReadonlyCharacter {
     private final BaseCharacter character;
@@ -80,6 +81,10 @@ public final class  ReadonlyCharacter {
 
     public Range getSliceRange() {
         return character.getSliceRange();
+    }
+
+    public MutableSet<Point2D> rangeAround(Range range){
+        return character.rangeAround(range).toSet();
     }
 
     public double getMana() {

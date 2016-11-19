@@ -325,29 +325,32 @@ public class BaseCharacter implements MapObject {
     }
 
     public MutableSet<Point2D> rangeAround(Range range){
-        return cached.getIfAbsentPut(Tuples.pair(currentLocation, range), Cache::new).get(() -> {
+        return rangeAround(range, currentLocation, map);
+    }
+
+    public static MutableSet<Point2D> rangeAround(Range range, Point2D location, GraphMap<Point2D, MapObject> map){
+        return cached.getIfAbsentPut(Tuples.pair(location, range), Cache::new).get(() -> {
             MutableSet<Point2D> points = Sets.mutable.empty();
-            points.add(currentLocation);
-            GraphMap<Point2D, MapObject> map = getMap();
+            points.add(location);
             if (range.isCardinal()) {
                 for (int i = 1; i <= range.getRange(); i++) {
-                    points.add(currentLocation.moveX(i));
-                    points.add(currentLocation.moveY(i));
-                    points.add(currentLocation.moveX(-i));
-                    points.add(currentLocation.moveY(-i));
+                    points.add(location.moveX(i));
+                    points.add(location.moveY(i));
+                    points.add(location.moveX(-i));
+                    points.add(location.moveY(-i));
                 }
             } else {
                 VonNeumannNeighborhood neighborhood = new VonNeumannNeighborhood();
-                points.addAll(getNeighbors(currentLocation, range.getRange(),
+                points.addAll(getNeighbors(location, range.getRange(),
                         new org.eclipse.collections.api.block.function.Function<Point2D, Collection<Point2D>>() {
                     private boolean firstStep = true;
                     @Override
                     public Collection<Point2D> valueOf(Point2D each) {
                         if (firstStep){
                             firstStep = false;
-                            return getMap().getNeighbors(each);
+                            return map.getNeighbors(each);
                         } else {
-                            return neighborhood.getAdjacencies(each).select(getMap()::inBounds);
+                            return neighborhood.getAdjacencies(each).select(map::inBounds);
                         }
                     }
                 }));

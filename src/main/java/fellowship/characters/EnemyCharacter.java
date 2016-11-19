@@ -1,11 +1,13 @@
 package fellowship.characters;
 
+import com.nmerrill.kothcomm.game.maps.Point2D;
 import fellowship.Range;
 import fellowship.Stat;
 import fellowship.abilities.Ability;
 import fellowship.abilities.ReadonlyAbility;
 import fellowship.actions.ReadonlyAction;
 import org.eclipse.collections.api.list.MutableList;
+import org.eclipse.collections.api.set.MutableSet;
 
 public final class EnemyCharacter {
     private final BaseCharacter character;
@@ -72,6 +74,10 @@ public final class EnemyCharacter {
 
     public Range getSliceRange() {
         return character.getSliceRange();
+    }
+
+    public MutableSet<Point2D> rangeAround(Range range, Point2D location){
+        return BaseCharacter.rangeAround(range, location, character.getMap()).toSet();
     }
 
     public double getMana() {
