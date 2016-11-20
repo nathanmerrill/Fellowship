@@ -9,7 +9,7 @@ import com.nmerrill.kothcomm.game.GameManager;
 import com.nmerrill.kothcomm.game.PlayerType;
 import com.nmerrill.kothcomm.game.runners.FixedCountRunner;
 import com.nmerrill.kothcomm.game.runners.TournamentRunner;
-import com.nmerrill.kothcomm.game.scoring.MamAggregator;
+import com.nmerrill.kothcomm.game.scoring.STVAggregator;
 import com.nmerrill.kothcomm.game.tournaments.RoundRobin;
 import com.nmerrill.kothcomm.gui.GamePane;
 import com.nmerrill.kothcomm.gui.GraphMap2DView;
@@ -68,7 +68,7 @@ public class Main extends Application {
         GameManager<Player> manager = new GameManager<>(Fellowship::new, arguments.getRandom())
                 .playerCount(2);
         manager.register(loader.load());
-        runner = new TournamentRunner<>(new RoundRobin<>(manager), new MamAggregator<>());
+        runner = new TournamentRunner<>(new RoundRobin<>(manager), new STVAggregator<>());
         if (arguments.useGui) {
             launch(Main.class);
         } else {
@@ -78,7 +78,7 @@ public class Main extends Application {
                 MutableList<PlayerType<Player>> scores =  scoreboard.scoresOrdered().collect(ObjectDoublePair::getOne);
                 return Tuples.twin(scores.get(0), scores.get(1));
             }).toSortedBag().forEachWithOccurrences((pair, count) ->
-                    System.out.println(pair.getOne().getName()+"\t"+pair.getTwo().getName()+":\t"+count)
+                    System.out.println(count+": "+pair.getOne().getName()+"\t"+pair.getTwo().getName())
             );
 
             System.exit(0);
