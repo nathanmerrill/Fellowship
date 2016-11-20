@@ -297,6 +297,10 @@ public class BaseCharacter implements MapObject {
         silenceTurn = 0;
     }
 
+    public void silence(int duration){
+        silenceTurn = turn + duration;
+    }
+
     public void poison(int amount, int duration){
         if (isPoisoned()){
             amount += poisonAmount;
