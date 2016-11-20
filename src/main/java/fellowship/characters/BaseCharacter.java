@@ -255,9 +255,7 @@ public class BaseCharacter implements MapObject {
             invisibleTurn = -1;
         }
         action.act();
-        if (!action.basicAction()){
-            lastAction = action;
-        }
+        lastAction = action;
         if (isDead()){
             return -1;
         }
