@@ -31,6 +31,8 @@ public class CharacterView extends VBox implements GameNode {
     public void showActions(){
         TableColumn<Action, String> name = new TableColumn<>("Action");
         name.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().getName()));
+        TableColumn<Action, Integer> cooldownLeft = new TableColumn<>("Cooldown left");
+        cooldownLeft.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().getRemainingCooldown()));
         TableColumn<Action, Integer> cooldown = new TableColumn<>("Cooldown");
         cooldown.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().getCooldown()));
         TableColumn<Action, Integer> mana = new TableColumn<>("Mana cost");

@@ -70,4 +70,8 @@ public final class ReadonlyAction {
     public String getName(){
         return action.getName();
     }
+
+    public Class<? extends Action> actionClass(){
+        return action.getClass();
+    }
 }

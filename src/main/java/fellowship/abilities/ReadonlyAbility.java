@@ -15,4 +15,12 @@ public final class ReadonlyAbility {
     public String name(){
         return ability.getName();
     }
+
+    public Class<?> abilityClass(){
+        if (ability instanceof ActionAbility) {
+            ActionAbility actionAbility = (ActionAbility) ability;
+            return actionAbility.actionClass();
+        }
+        return ability.getClass();
+    }
 }
