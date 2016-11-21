@@ -22,7 +22,7 @@ public class TrueSight extends Ability {
                     .forEach(c -> {
                         if (c instanceof BaseCharacter) {
                             BaseCharacter ch = (BaseCharacter) c;
-                            if (enemy.contains(ch)){
+                            if (ch.isInvisible() && enemy.contains(ch)){
                                 ch.reveal();
                             }
                         }

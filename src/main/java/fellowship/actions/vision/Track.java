@@ -22,7 +22,7 @@ public class Track extends TargettedAction {
         int revealEvent = target.on(Events.TurnEnd, Event.forever(t -> target.reveal()));
         int damageEvent = target.on(Events.Damaged, Event.forever(t -> {
             DamageEvent damage = (DamageEvent) t;
-            damage.setAmount(damage.getAmount()*.1);
+            damage.setAmount(damage.getAmount()*1.1);
         }));
         character.on(Events.TurnStart, Event.after(10, t -> {
             target.off(revealEvent);

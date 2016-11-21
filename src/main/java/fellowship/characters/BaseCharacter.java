@@ -218,7 +218,7 @@ public class BaseCharacter implements MapObject {
     }
 
     public void reveal(){
-        invisibleTurn = 0;
+        invisibleTurn = -1;
     }
 
     public int action(){
