@@ -20,6 +20,7 @@ public abstract class Player extends AbstractPlayer<Player>{
 
     public void setTeam(MutableSet<ReadonlyCharacter> team) {
         this.team = team;
+
     }
 
     public void setEnemies(MutableSet<EnemyCharacter> enemies) {
