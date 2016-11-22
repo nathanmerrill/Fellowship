@@ -81,10 +81,11 @@ public class Main extends Application {
             builder.setBorderType(TableBuilder.BorderType.ASCII);
             builder.rightAlign();
             MutableList<String> header = Lists.mutable.of("Name");
-            header.addAll(manager.allPlayers().collect(PlayerType::getName));
-            System.out.println(builder.display(manager.allPlayers(), p1 -> {
+            MutableList<PlayerType<Player>> players = manager.allPlayers().sortThis();
+            header.addAll(players.collect(PlayerType::getName));
+            System.out.println(builder.display(players, p1 -> {
                 MutableList<String> row = Lists.mutable.of(p1.getName());
-                manager.allPlayers().forEach(p2 -> {
+                players.forEach(p2 -> {
                     if (p1.equals(p2)){
                         row.add("");
                         return;
