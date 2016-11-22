@@ -1,6 +1,6 @@
 package fellowship;
 
-import com.nmerrill.kothcomm.gui.GameNode;
+import com.nmerrill.kothcomm.ui.gui.GameNode;
 import fellowship.actions.Action;
 import fellowship.characters.BaseCharacter;
 import javafx.beans.property.ReadOnlyObjectWrapper;

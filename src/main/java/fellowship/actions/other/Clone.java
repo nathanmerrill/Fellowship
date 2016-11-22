@@ -22,7 +22,7 @@ public class Clone extends LocationAction {
         clone.setLocation(location);
         character.getTeam().addCharacter(clone);
         clone.start();
-
+        clone.setSightRange(character.getSightRange());
     }
 
     @Override

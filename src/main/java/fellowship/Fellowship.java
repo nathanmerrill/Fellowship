@@ -50,7 +50,9 @@ public class Fellowship extends MaxActionQueueGame<Player> {
             if (templateList.size() != CHARACTERS_PER_TEAM) {
                 throw new RuntimeException(player.getName() + " created a team of " + templateList.size() + " characters");
             }
-            templateList.forEach(template -> {
+            templateList.zipWithIndex().forEach(p -> {
+                CharacterTemplate template = p.getOne();
+                int index = p.getTwo();
                 BaseCharacter character = new BaseCharacter(queue,
                         map,
                         teams.get(player),
@@ -58,20 +60,14 @@ public class Fellowship extends MaxActionQueueGame<Player> {
                 );
                 template.currentAttributes().forEach(character::addStat);
                 template.currentAbilities().forEach(character::addAbility);
-                character.start();
-            });
-        });
-        teamList.zipWithIndex().forEach(t -> {
-            MutableList<BaseCharacter> characters = t.getOne().getCharacters();
-            int y = t.getTwo() * (MAP_SIZE - 1);
-            int spacing = MAP_SIZE / characters.size();
-            characters.zipWithIndex().forEach(p -> {
-                BaseCharacter character = p.getOne();
-                int x = spacing * p.getTwo();
+                int y = players.indexOf(player) * (MAP_SIZE - 1);
+                int spacing = MAP_SIZE / CHARACTERS_PER_TEAM;
+                int x = spacing * index;
                 character.setLocation(new Point2D(x, y));
             });
         });
 
+        teamList.flatCollect(Team::getCharacters).shuffleThis(random).forEach(BaseCharacter::start);
     }
 
     @Override

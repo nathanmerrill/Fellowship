@@ -1,13 +1,12 @@
 package fellowship.abilities.mobility;
 
-import fellowship.characters.BaseCharacter;
 import fellowship.abilities.Ability;
-import fellowship.Range;
+import fellowship.characters.BaseCharacter;
 
 public class Dash extends Ability {
     @Override
     public void apply(BaseCharacter character) {
-        character.setStepRange(new Range(character.getStepRange().getRange()));
+        character.setStepRange(character.getStepRange().longer(1));
     }
 
     @Override

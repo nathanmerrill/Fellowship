@@ -24,4 +24,9 @@ public class Phase extends Action {
     public int getManaCost() {
         return 0;
     }
+
+    @Override
+    public boolean breaksInvisibility() {
+        return false;
+    }
 }

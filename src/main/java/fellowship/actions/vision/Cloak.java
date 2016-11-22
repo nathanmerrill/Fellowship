@@ -24,4 +24,9 @@ public class Cloak extends Action {
     public int getManaCost() {
         return 20;
     }
+
+    @Override
+    public boolean breaksInvisibility() {
+        return false;
+    }
 }

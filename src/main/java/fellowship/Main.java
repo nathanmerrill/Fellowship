@@ -10,18 +10,19 @@ import com.nmerrill.kothcomm.game.PlayerType;
 import com.nmerrill.kothcomm.game.runners.FixedCountRunner;
 import com.nmerrill.kothcomm.game.runners.TournamentRunner;
 import com.nmerrill.kothcomm.game.scoring.STVAggregator;
+import com.nmerrill.kothcomm.game.scoring.Scoreboard;
 import com.nmerrill.kothcomm.game.tournaments.RoundRobin;
-import com.nmerrill.kothcomm.gui.GamePane;
-import com.nmerrill.kothcomm.gui.GraphMap2DView;
-import com.nmerrill.kothcomm.gui.TournamentPane;
+import com.nmerrill.kothcomm.ui.gui.GamePane;
+import com.nmerrill.kothcomm.ui.gui.GraphMap2DView;
+import com.nmerrill.kothcomm.ui.gui.TournamentPane;
+import com.nmerrill.kothcomm.ui.text.TableBuilder;
 import fellowship.characters.BaseCharacter;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import org.eclipse.collections.api.list.MutableList;
-import org.eclipse.collections.api.tuple.primitive.ObjectDoublePair;
-import org.eclipse.collections.impl.tuple.Tuples;
+import org.eclipse.collections.impl.factory.Lists;
 
 public class Main extends Application {
     private static TournamentRunner<Player> runner;
@@ -72,14 +73,41 @@ public class Main extends Application {
         if (arguments.useGui) {
             launch(Main.class);
         } else {
-            new FixedCountRunner<>(runner).run(arguments.iterations, System.out);
+            new FixedCountRunner<>(runner).run(arguments.iterations);
 
-            runner.getScoreList().collect(scoreboard -> {
-                MutableList<PlayerType<Player>> scores =  scoreboard.scoresOrdered().collect(ObjectDoublePair::getOne);
-                return Tuples.twin(scores.get(0), scores.get(1));
-            }).toSortedBag().forEachWithOccurrences((pair, count) ->
-                    System.out.println(count+": "+pair.getOne().getName()+"\t"+pair.getTwo().getName())
-            );
+            MutableList<Scoreboard<PlayerType<Player>>> scoreboards = runner.getScoreList();
+            TableBuilder builder = new TableBuilder();
+            builder.hasHeader(true);
+            builder.setBorderType(TableBuilder.BorderType.ASCII);
+            builder.rightAlign();
+            MutableList<String> header = Lists.mutable.of("Name");
+            header.addAll(manager.allPlayers().collect(PlayerType::getName));
+            System.out.println(builder.display(manager.allPlayers(), p1 -> {
+                MutableList<String> row = Lists.mutable.of(p1.getName());
+                manager.allPlayers().forEach(p2 -> {
+                    if (p1.equals(p2)){
+                        row.add("");
+                        return;
+                    }
+                    int wins=0, ties=0, losses=0;
+                    for (Scoreboard<PlayerType<Player>> scoreboard: scoreboards.select(s -> s.contains(p1) && s.contains(p2))){
+                        int compare = scoreboard.compare(p1, p2);
+                        if (compare < 0){
+                            wins++;
+                        } else if (compare > 0){
+                            losses++;
+                        } else {
+                            ties++;
+                        }
+                    }
+                    if (wins != 0 || ties != 0 || losses != 0) {
+                        row.add(wins + "-" + ties + "-" + losses);
+                    } else {
+                        row.add("");
+                    }
+                });
+                return row;
+            }, header));
 
             System.exit(0);
         }

@@ -24,4 +24,9 @@ public class Hide extends Action {
     public int getManaCost() {
         return 4;
     }
+
+    @Override
+    public boolean breaksInvisibility() {
+        return false;
+    }
 }

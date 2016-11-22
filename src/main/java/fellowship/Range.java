@@ -2,21 +2,41 @@ package fellowship;
 
 public class Range {
     private final boolean isCardinal;
-    private final int range;
+    private final int distance;
     public Range(int range, boolean isCardinal){
-        this.range = range;
+        this.distance = range;
         this.isCardinal = isCardinal;
     }
     public Range(int range){
         this(range, false);
     }
 
+    public Range asCardinal(){
+        return new Range(this.distance, true);
+    }
+
+    public Range notCardinal(){
+        return new Range(this.distance, false);
+    }
+
+    public Range shorter(int amount){
+        return new Range(this.distance-amount, isCardinal);
+    }
+
+    public Range longer(int amount){
+        return new Range(this.distance+amount, isCardinal);
+    }
+
     public boolean isCardinal() {
         return isCardinal;
     }
 
+    public int getDistance() {
+        return distance;
+    }
+
     public int getRange() {
-        return range;
+        return Math.max(distance, 1);
     }
 
     @Override
@@ -27,14 +47,14 @@ public class Range {
         Range range1 = (Range) o;
 
         if (isCardinal != range1.isCardinal) return false;
-        return range == range1.range;
+        return distance == range1.distance;
 
     }
 
     @Override
     public int hashCode() {
         int result = (isCardinal ? 1 : 0);
-        result = 31 * result + range;
+        result = 31 * result + distance;
         return result;
     }
 }

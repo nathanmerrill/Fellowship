@@ -174,7 +174,7 @@ public class BaseCharacter implements MapObject {
     }
 
     public boolean isPoisoned(){
-        return poisonTurn >= turn;
+        return poisonTurn > turn;
     }
 
     public int getPoisonAmount(){
@@ -182,11 +182,11 @@ public class BaseCharacter implements MapObject {
     }
 
     public boolean isSilenced(){
-        return silenceTurn >= turn;
+        return silenceTurn > turn;
     }
 
     public boolean isInvisible(){
-        return invisibleTurn >= turn;
+        return invisibleTurn > turn;
     }
 
     public boolean isDead(){

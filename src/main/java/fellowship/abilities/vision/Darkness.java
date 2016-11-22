@@ -1,14 +1,20 @@
 package fellowship.abilities.vision;
 
-import fellowship.characters.BaseCharacter;
+import com.nmerrill.kothcomm.utils.Event;
 import fellowship.abilities.Ability;
-import fellowship.Range;
+import fellowship.characters.BaseCharacter;
+import fellowship.events.Events;
 
 public class Darkness extends Ability {
 
     @Override
     public void apply(BaseCharacter character) {
-        character.getTeam().getEnemyTeam().getCharacters().forEach(c -> c.setSightRange(new Range(Math.max(1, c.getSightRange().getRange()-1))));
+        character.getTeam().getEnemyTeam().getCharacters().forEach(c -> c.setSightRange(c.getSightRange().shorter(1)));
+        character.on(Events.Death, Event.forever(e -> {
+            if (!e.isCancelled()) {
+                character.getTeam().getEnemyTeam().getCharacters().forEach(c -> c.setSightRange(c.getSightRange().longer(1)));
+            }
+        }));
     }
 
 }
