@@ -345,7 +345,9 @@ public class BaseCharacter implements MapObject {
         SliceEvent event = new SliceEvent(this, character, stats.get(primary.ordinal()));
         eventManager.addEvent(event, Events.Slice);
         character.eventManager.addEvent(event, Events.Sliced);
-        character.damage(this, event.getAmount());
+        if (!event.isCancelled()) {
+            character.damage(this, event.getAmount());
+        }
     }
 
     public Stat primaryStat(){
