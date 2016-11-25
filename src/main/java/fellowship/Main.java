@@ -8,8 +8,8 @@ import com.nmerrill.kothcomm.communication.languages.local.LocalJavaLoader;
 import com.nmerrill.kothcomm.game.PlayerType;
 import com.nmerrill.kothcomm.game.runners.FixedCountRunner;
 import com.nmerrill.kothcomm.game.runners.TournamentRunner;
-import com.nmerrill.kothcomm.game.scoring.STVAggregator;
 import com.nmerrill.kothcomm.game.scoring.Scoreboard;
+import com.nmerrill.kothcomm.game.scoring.ScoredRankingsAggregator;
 import com.nmerrill.kothcomm.game.tournaments.RoundRobin;
 import com.nmerrill.kothcomm.ui.gui.GamePane;
 import com.nmerrill.kothcomm.ui.gui.GraphMap2DView;
@@ -69,7 +69,7 @@ public class Main extends Application {
 //        loader.addLoader(localLoader);
         MutableList<PlayerType<Player>> players = loader.load();
         Random random = arguments.getRandom();
-        runner = new TournamentRunner<>(new RoundRobin<>(players, random), new STVAggregator<>(), 2, Fellowship::new, random);
+        runner = new TournamentRunner<>(new RoundRobin<>(players, random), new ScoredRankingsAggregator<>(), 2, Fellowship::new, random);
         if (arguments.useGui) {
             launch(Main.class);
         } else {
