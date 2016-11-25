@@ -433,7 +433,9 @@ public class BaseCharacter implements MapObject {
     public void damage(BaseCharacter source, double amount){
         DamageEvent damageEvent = new DamageEvent(source, this, amount);
         eventManager.addEvent(damageEvent, Events.Damaged);
-        damage(damageEvent.getAmount());
+        if (!damageEvent.isCancelled()) {
+            damage(damageEvent.getAmount());
+        }
     }
 
     public void damage(double amount){
