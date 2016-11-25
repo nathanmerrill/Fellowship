@@ -5,11 +5,12 @@ import fellowship.Range;
 import fellowship.Stat;
 import fellowship.abilities.Ability;
 import fellowship.abilities.ReadonlyAbility;
+import fellowship.actions.Action;
 import fellowship.actions.ReadonlyAction;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.set.MutableSet;
 
-public final class EnemyCharacter {
+public final class EnemyCharacter implements CharacterInterface{
     private final BaseCharacter character;
 
     public EnemyCharacter(BaseCharacter character){
@@ -88,12 +89,20 @@ public final class EnemyCharacter {
         return character.getMaxMana();
     }
 
+    public double getManaRegen() {
+        return character.getManaRegen();
+    }
+
     public double getHealth(){
         return character.getHealth();
     }
 
     public int getMaxHealth(){
         return character.getMaxHealth();
+    }
+
+    public double getHealthRegen() {
+        return character.getHealthRegen();
     }
 
     public MutableList<ReadonlyAbility> getAbilities(){
@@ -104,4 +113,8 @@ public final class EnemyCharacter {
         return character.getClass();
     }
 
+    @Override
+    public MutableList<ReadonlyAction> getActions() {
+        return character.getActions().collect(Action::readonly);
+    }
 }

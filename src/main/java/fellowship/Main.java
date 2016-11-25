@@ -5,7 +5,6 @@ import com.nmerrill.kothcomm.communication.Downloader;
 import com.nmerrill.kothcomm.communication.LanguageLoader;
 import com.nmerrill.kothcomm.communication.languages.java.JavaLoader;
 import com.nmerrill.kothcomm.communication.languages.local.LocalJavaLoader;
-import com.nmerrill.kothcomm.game.GameManager;
 import com.nmerrill.kothcomm.game.PlayerType;
 import com.nmerrill.kothcomm.game.runners.FixedCountRunner;
 import com.nmerrill.kothcomm.game.runners.TournamentRunner;
@@ -24,8 +23,10 @@ import javafx.stage.Stage;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.impl.factory.Lists;
 
+import java.util.Random;
+
 public class Main extends Application {
-    private static TournamentRunner<Player> runner;
+    private static TournamentRunner<Player, Fellowship> runner;
 
     @Override
     public void start(Stage primaryStage) {
@@ -62,14 +63,13 @@ public class Main extends Application {
             new Downloader(loader, arguments.questionID).downloadQuestions();
         }
         LocalJavaLoader<Player> localLoader = new LocalJavaLoader<>();
-//         Add your player here if you want to test it locally, and uncomment the next line
+//        Add your player here if you want to test it locally, and uncomment the next line
 //        localLoader.register("Sample", TemplatePlayer::new);
 //        localLoader.register("Your player", YourPlayer::new);
 //        loader.addLoader(localLoader);
-        GameManager<Player> manager = new GameManager<>(Fellowship::new, arguments.getRandom())
-                .playerCount(2);
-        manager.register(loader.load());
-        runner = new TournamentRunner<>(new RoundRobin<>(manager), new STVAggregator<>());
+        MutableList<PlayerType<Player>> players = loader.load();
+        Random random = arguments.getRandom();
+        runner = new TournamentRunner<>(new RoundRobin<>(players, random), new STVAggregator<>(), 2, Fellowship::new, random);
         if (arguments.useGui) {
             launch(Main.class);
         } else {
@@ -81,7 +81,7 @@ public class Main extends Application {
             builder.setBorderType(TableBuilder.BorderType.ASCII);
             builder.rightAlign();
             MutableList<String> header = Lists.mutable.of("Name");
-            MutableList<PlayerType<Player>> players = manager.allPlayers().sortThis();
+            players.sortThis();
             header.addAll(players.collect(PlayerType::getName));
             System.out.println(builder.display(players, p1 -> {
                 MutableList<String> row = Lists.mutable.of(p1.getName());

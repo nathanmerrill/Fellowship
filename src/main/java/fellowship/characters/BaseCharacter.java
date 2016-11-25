@@ -14,6 +14,7 @@ import fellowship.actions.ReadonlyAction;
 import fellowship.actions.attacking.Slice;
 import fellowship.actions.mobility.Step;
 import fellowship.actions.other.Smile;
+import fellowship.actions.other.Wall;
 import fellowship.events.*;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.list.primitive.MutableIntList;
@@ -57,6 +58,7 @@ public class BaseCharacter implements MapObject {
     private Stat primary;
     private int smartness, cleverness;
     private double health, mana;
+    private double manaRegen, healthRegen;
     private int maxHealth, maxMana;
     private int delay;
     private int stunTick;
@@ -90,6 +92,8 @@ public class BaseCharacter implements MapObject {
         this.actions.add(slice);
         this.actions.add(step);
         this.actions.add(smile);
+        this.manaRegen = 0;
+        this.healthRegen = 0;
         this.silenceTurn = -1;
         this.poisonTurn = -1;
         this.frozenTurn = -1;
@@ -158,15 +162,33 @@ public class BaseCharacter implements MapObject {
             case STR:
                 maxHealth += HEALTH_PER_STR*amount;
                 heal(HEALTH_PER_STR*amount);
+                healthRegen += HEALTH_REGEN_PER_STR*amount;
             break;
             case AGI:
                 delay -= DELAY_PER_AGI*amount;
             break;
             case INT:
                 maxMana += MANA_PER_INT*amount;
-                mana += MANA_PER_INT*amount;
+                addMana(MANA_PER_INT*amount);
+                manaRegen += MANA_REGEN_PER_INT*amount;
             break;
         }
+    }
+
+    public void addManaRegen(double amount){
+        manaRegen += amount;
+    }
+
+    public void addHealthRegen(double amount){
+        healthRegen += amount;
+    }
+
+    public double getManaRegen(){
+        return manaRegen;
+    }
+
+    public double getHealthRegen(){
+        return healthRegen;
     }
 
     public boolean isStunned(){
@@ -232,8 +254,8 @@ public class BaseCharacter implements MapObject {
         if (event.isCancelled()){
             return delay;
         }
-        heal(HEALTH_REGEN_PER_STR*getStat(Stat.STR));
-        addMana(MANA_REGEN_PER_INT*getStat(Stat.INT));
+        heal(healthRegen);
+        addMana(manaRegen);
         if (isPoisoned()){
             damage(getPoisonAmount());
             if (isDead()){
@@ -399,6 +421,13 @@ public class BaseCharacter implements MapObject {
 
     public MutableSet<BaseCharacter> visibleEnemies(){
         return visibleEnemies(1000);
+    }
+
+    public MutableMap<Point2D, MapObject> visibleStructures() {
+        return teamVision()
+                .select(map::contains)
+                .select(p -> (map.get(p) instanceof TrapStack) || (map.get(p) instanceof Wall))
+                    .toMap(i -> i, map::get);
     }
 
     public void damage(BaseCharacter source, double amount){
