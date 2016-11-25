@@ -28,9 +28,4 @@ public class DamageEvent extends Event {
     public BaseCharacter getDamaged() {
         return damaged;
     }
-
-    @Override
-    public void cancel() {
-
-    }
 }
