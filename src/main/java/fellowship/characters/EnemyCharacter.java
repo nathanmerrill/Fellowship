@@ -34,7 +34,11 @@ public final class EnemyCharacter implements CharacterInterface{
     }
 
     public ReadonlyAction getLastAction(){
-        return new ReadonlyAction(character.getLastAction());
+        Action lastAction = character.getLastAction();
+        if (lastAction == null){
+            return null;
+        }
+        return new ReadonlyAction(lastAction);
     }
 
     public boolean isFrozen(){
