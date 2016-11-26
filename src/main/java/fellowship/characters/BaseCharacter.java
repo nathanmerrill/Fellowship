@@ -281,6 +281,7 @@ public class BaseCharacter implements MapObject {
         if (isDead()){
             return -1;
         }
+        eventManager.addEvent(new TurnEndEvent(), Events.TurnEnd);
         return delay;
     }
 
