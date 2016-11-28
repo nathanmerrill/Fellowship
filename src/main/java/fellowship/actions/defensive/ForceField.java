@@ -10,13 +10,15 @@ public class ForceField extends Action {
     private int remaining = 0;
     public ForceField(BaseCharacter character){
         super(character);
-        character.on(Events.Damaged, e ->{
-            if (remaining > 0){
-                remaining--;
-                e.cancel();
-            }
-            return true;
-        });
+        if (character != null) {
+            character.on(Events.Damaged, e -> {
+                if (remaining > 0) {
+                    remaining--;
+                    e.cancel();
+                }
+                return true;
+            });
+        }
     }
 
     @Override
