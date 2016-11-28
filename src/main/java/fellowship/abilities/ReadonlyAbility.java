@@ -23,4 +23,8 @@ public final class ReadonlyAbility {
         }
         return ability.getClass();
     }
+
+    public int getRemaining(){
+        return ability.getRemaining();
+    }
 }

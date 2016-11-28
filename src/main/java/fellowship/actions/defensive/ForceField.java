@@ -1,20 +1,32 @@
 package fellowship.actions.defensive;
 
 
-import fellowship.characters.BaseCharacter;
 import fellowship.actions.Action;
-import com.nmerrill.kothcomm.utils.Event;
+import fellowship.characters.BaseCharacter;
 import fellowship.events.Events;
 
 public class ForceField extends Action {
 
+    private int remaining = 0;
     public ForceField(BaseCharacter character){
         super(character);
     }
 
     @Override
     public void perform() {
-        character.on(Events.Damaged, Event.every(5, Event::cancel));
+        remaining = 5;
+        character.on(Events.Damaged, e ->{
+            remaining--;
+            if (remaining == 0) {
+                return false;
+            }
+            return true;
+        });
+    }
+
+    @Override
+    public int getRemaining() {
+        return remaining;
     }
 
     @Override

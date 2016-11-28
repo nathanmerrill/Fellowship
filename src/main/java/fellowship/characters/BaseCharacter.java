@@ -113,6 +113,7 @@ public class BaseCharacter implements MapObject {
 
     public void start(){
         primary = Stat.values()[stats.indexOf(stats.max())];
+        abilities.forEachWith(Ability::apply, this);
         actionQueue.enqueue(this::action, delay);
     }
 
@@ -217,7 +218,6 @@ public class BaseCharacter implements MapObject {
 
     public void addAbility(Ability ability){
         abilities.add(ability);
-        ability.apply(this);
     }
 
     public Action getLastAction(){

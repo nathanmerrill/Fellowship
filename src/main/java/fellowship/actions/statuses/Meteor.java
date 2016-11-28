@@ -1,17 +1,17 @@
 package fellowship.actions.statuses;
 
+import fellowship.actions.Action;
 import fellowship.characters.BaseCharacter;
-import fellowship.actions.TargettedAction;
 
-public class Stun extends TargettedAction {
+public class Meteor extends Action {
 
-    public Stun(BaseCharacter character){
+    public Meteor(BaseCharacter character){
         super(character);
     }
 
     @Override
-    public void perform(BaseCharacter target) {
-        target.stun(300);
+    public void perform() {
+        character.visibleEnemies().forEachWith(BaseCharacter::stun, 100);
     }
 
     @Override
@@ -21,6 +21,6 @@ public class Stun extends TargettedAction {
 
     @Override
     public int getManaCost() {
-        return 10;
+        return 25;
     }
 }

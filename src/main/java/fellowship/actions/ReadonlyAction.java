@@ -74,4 +74,8 @@ public final class ReadonlyAction {
     public Class<? extends Action> actionClass(){
         return action.getClass();
     }
+
+    public int getRemaining(){
+        return action.getRemaining();
+    }
 }

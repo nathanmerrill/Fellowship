@@ -8,7 +8,7 @@ import fellowship.actions.ReadonlyAction;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.set.MutableSet;
 
-interface CharacterInterface {
+public interface CharacterInterface {
     int smartness();
 
     int cleverness();

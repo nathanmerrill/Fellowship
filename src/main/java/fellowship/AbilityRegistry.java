@@ -83,6 +83,7 @@ public class AbilityRegistry {
             Poison.class,
             Slow.class,
             Stun.class,
+            Meteor.class,
             Cloak.class,
             Hide.class,
             Phase.class,

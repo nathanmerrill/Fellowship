@@ -108,4 +108,8 @@ public abstract class Action {
     public String getName(){
         return getClass().getSimpleName();
     }
+
+    public int getRemaining(){
+        return 0;
+    }
 }

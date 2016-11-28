@@ -9,8 +9,10 @@ import java.util.function.Consumer;
 
 public abstract class Ability {
     private final ReadonlyAbility readonly;
+    private int remaining;
     public Ability(){
         this.readonly = new ReadonlyAbility(this);
+        remaining = 0;
     }
     public abstract void apply(BaseCharacter character);
     public int getNumSlots(){
@@ -18,11 +20,23 @@ public abstract class Ability {
     }
     public boolean repeatable() {return false;}
 
-    public static void addCooldown(int cooldown, BaseCharacter character, Events eventType, Consumer<Event> consumer){
+    public void addCooldown(int cooldown, BaseCharacter character, Events eventType, Consumer<Event> consumer){
         character.on(eventType, Event.once(event -> {
             consumer.accept(event);
-            character.on(Events.TurnStart, Event.after(cooldown, i -> addCooldown(cooldown, character, eventType, consumer)));
+            remaining = cooldown;
+            character.on(Events.TurnStart, e -> {
+                remaining--;
+                if (remaining == 0){
+                    consumer.accept(e);
+                    return false;
+                }
+                return true;
+            });
         }));
+    }
+
+    public int getRemaining() {
+        return remaining;
     }
 
     public int attributePoints(){
