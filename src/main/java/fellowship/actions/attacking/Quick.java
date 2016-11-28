@@ -19,7 +19,9 @@ public class Quick extends TargettedAction {
     @Override
     public void perform(BaseCharacter target) {
         character.slice(target);
-        character.slice(target);
+        if (!target.isDead()) {
+            character.slice(target);
+        }
     }
 
     @Override
