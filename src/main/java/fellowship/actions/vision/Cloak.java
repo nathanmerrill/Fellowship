@@ -13,6 +13,7 @@ public class Cloak extends Action {
     @Override
     public void perform() {
         character.teammates().forEach(teammate -> teammate.invisible(5));
+        character.invisible(5);
     }
 
     @Override
