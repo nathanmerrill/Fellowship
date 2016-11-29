@@ -79,6 +79,7 @@ public class AbilityRegistry {
             Dispel.class,
             Duel.class,
             Knockout.class,
+            Silence.class,
             Leash.class,
             Poison.class,
             Slow.class,

@@ -392,7 +392,7 @@ public class BaseCharacter implements MapObject {
 
     public MutableSet<BaseCharacter> teammates(Range range){
         MutableSet<Point2D> points = rangeAround(range);
-        return teammates().select(t -> points.contains(t.currentLocation));
+        return teammates().select(t -> points.contains(t.currentLocation)).without(this);
     }
 
     public MutableSet<BaseCharacter> teammates(int range){

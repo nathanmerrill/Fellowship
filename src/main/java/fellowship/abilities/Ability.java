@@ -27,7 +27,6 @@ public abstract class Ability {
             character.on(Events.TurnStart, e -> {
                 remaining--;
                 if (remaining == 0){
-                    consumer.accept(e);
                     return false;
                 }
                 return true;
