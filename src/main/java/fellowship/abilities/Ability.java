@@ -27,6 +27,7 @@ public abstract class Ability {
             character.on(Events.TurnStart, e -> {
                 remaining--;
                 if (remaining == 0){
+                    addCooldown(cooldown, character, eventType, consumer);
                     return false;
                 }
                 return true;
