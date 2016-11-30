@@ -1,5 +1,5 @@
 package fellowship;
 
 public enum Stat {
-    INT, STR, AGI
+    STR, AGI, INT
 }
