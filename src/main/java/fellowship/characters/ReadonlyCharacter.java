@@ -145,4 +145,13 @@ public final class ReadonlyCharacter implements CharacterInterface {
         });
     }
 
+    @Override
+    public int getNextTick() {
+        return character.getNextTick();
+    }
+
+    @Override
+    public int getStunTick() {
+        return character.getStunTick();
+    }
 }

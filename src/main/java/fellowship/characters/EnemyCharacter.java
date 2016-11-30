@@ -121,4 +121,14 @@ public final class EnemyCharacter implements CharacterInterface{
     public MutableList<ReadonlyAction> getActions() {
         return character.getActions().collect(Action::readonly);
     }
+
+    @Override
+    public int getNextTick() {
+        return character.getNextTick();
+    }
+
+    @Override
+    public int getStunTick() {
+        return character.getStunTick();
+    }
 }

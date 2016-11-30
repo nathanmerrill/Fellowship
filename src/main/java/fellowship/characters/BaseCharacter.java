@@ -72,6 +72,7 @@ public class BaseCharacter implements MapObject {
     private Action lastAction;
     private EventManager<Events> eventManager;
     private Point2D currentLocation;
+    private int nextTick;
 
     public BaseCharacter(ActionQueue actionQueue, GraphMap<Point2D, MapObject> map, Team team, Random random){
         abilities = Lists.mutable.empty();
@@ -252,6 +253,7 @@ public class BaseCharacter implements MapObject {
         TurnStartEvent event = new TurnStartEvent();
         eventManager.addEvent(event, Events.TurnStart);
         if (event.isCancelled()){
+            nextTick = actionQueue.getTime()+delay;
             return delay;
         }
         heal(healthRegen);
@@ -282,6 +284,7 @@ public class BaseCharacter implements MapObject {
             return -1;
         }
         eventManager.addEvent(new TurnEndEvent(), Events.TurnEnd);
+        nextTick = actionQueue.getTime() + delay;
         return delay;
     }
 
@@ -308,6 +311,14 @@ public class BaseCharacter implements MapObject {
 
     public void stun(int duration){
         stunTick = actionQueue.getTime() + duration;
+    }
+
+    public int getStunTick() {
+        return stunTick;
+    }
+
+    public int getNextTick() {
+        return nextTick;
     }
 
     public void dispel(){
@@ -457,6 +468,7 @@ public class BaseCharacter implements MapObject {
         if (event.isCancelled()){
             return;
         }
+        this.nextTick = -1;
         this.dead = true;
         this.team.removeCharacter(this);
         this.map.clear(currentLocation);

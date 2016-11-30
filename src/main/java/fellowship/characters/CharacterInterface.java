@@ -59,4 +59,8 @@ public interface CharacterInterface {
 
     Class<? extends BaseCharacter> characterClass();
 
+    int getStunTick();
+
+    int getNextTick();
+
 }
