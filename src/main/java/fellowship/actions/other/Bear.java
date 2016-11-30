@@ -1,10 +1,9 @@
 package fellowship.actions.other;
 
 import com.nmerrill.kothcomm.game.maps.Point2D;
-import fellowship.*;
-import fellowship.characters.BaseCharacter;
+import fellowship.Stat;
 import fellowship.actions.LocationAction;
-import fellowship.actions.mobility.Step;
+import fellowship.characters.BaseCharacter;
 
 public class Bear extends LocationAction {
 
@@ -18,7 +17,6 @@ public class Bear extends LocationAction {
         for (Stat stat: Stat.values()){
             bear.addStat(stat, 5);
         }
-        bear.addAction(new Step(bear));
         bear.setLocation(location);
         bear.start();
     }
