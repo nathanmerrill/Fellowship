@@ -2,6 +2,7 @@ package fellowship.actions.other;
 
 import com.nmerrill.kothcomm.game.maps.Point2D;
 import fellowship.Stat;
+import fellowship.abilities.vision.FarSight;
 import fellowship.actions.LocationAction;
 import fellowship.characters.BaseCharacter;
 
@@ -17,6 +18,8 @@ public class Bear extends LocationAction {
         for (Stat stat: Stat.values()){
             bear.addStat(stat, 5);
         }
+        bear.setSightRange(character.getSightRange()
+                .shorter(2*character.getAbilities().count(c -> c.getClass().equals(FarSight.class))));
         bear.setLocation(location);
         bear.start();
     }
